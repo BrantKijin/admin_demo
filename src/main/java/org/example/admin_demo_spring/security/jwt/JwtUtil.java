@@ -3,6 +3,10 @@ package org.example.admin_demo_spring.security.jwt;
 import static io.jsonwebtoken.Jwts.*;
 
 import java.security.Key;
+import java.sql.Timestamp;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.Base64;
 import java.util.Date;
 
@@ -32,7 +36,9 @@ public class JwtUtil {
 	public static final String AUTHORIZATION_HEADER = "Authorization";
 	public static final String AUTHORIZATION_KEY = "auth";
 	private static final String BEARER_PREFIX = "Bearer=";
-	private static final long TOKEN_TIME = 60 * 60 * 1000L;
+
+	@Value("${jwt.secret.expiration-hours}")
+	private static long expirationHours;
 
 	private final UserDetailsServiceImpl userDetailsService;
 
@@ -74,14 +80,13 @@ public class JwtUtil {
 
 	// 토큰 생성
 	public String createToken(String username, UserRoleEnum role) {
-		Date date = new Date();
 
 		return BEARER_PREFIX +
 			builder()
 				.setSubject(username)
 				.claim(AUTHORIZATION_KEY, role)
-				.setExpiration(new Date(date.getTime() + TOKEN_TIME))
-				.setIssuedAt(date)
+				.setExpiration(Date.from(Instant.now().plus(expirationHours, ChronoUnit.HOURS)))
+				.setIssuedAt(Timestamp.valueOf(LocalDateTime.now()))
 				.signWith(key, signatureAlgorithm)
 				.compact();
 	}

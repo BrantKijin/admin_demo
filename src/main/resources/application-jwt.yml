@@ -1,3 +1,4 @@
 jwt:
   secret:
     key: qwrmlasfmlqw2491u4291urjeiqowfjkwklfnlksdnfi13fnou3nounf19
+    expiration-hours: 3
