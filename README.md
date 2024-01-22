@@ -9,12 +9,12 @@
 |---|------|---|---|
 | talk | 5432 | postgres | aegisep1234@ |
 
-
+* src > resource > sql > schema.sql 초기 데이터 생성 스키마 
+* 타임리프로 기본 포트로 접속하면 아디 비번 , 창이 뜬다
 ## 2. API TEST
  
 
 ````
-
 
 정상출력되었으면 정상 API 동작
 ````
