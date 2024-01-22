@@ -54,7 +54,6 @@ public class SpringSecurityConfig {
 				config.setAllowCredentials(true);
 				config.setAllowedHeaders(Collections.singletonList("*"));
 				config.setExposedHeaders(List.of("Authorization"));
-				config.setMaxAge(3600L);
 				return config;
 			}))
 			/* csrf 설정 해제. */
