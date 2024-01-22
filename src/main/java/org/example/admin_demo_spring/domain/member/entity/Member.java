@@ -1,5 +1,6 @@
 package org.example.admin_demo_spring.domain.member.entity;
 
+import org.example.admin_demo_spring.domain.common.entity.BaseEntity;
 import org.example.admin_demo_spring.security.UserRoleEnum;
 
 import jakarta.persistence.Column;
@@ -9,13 +10,14 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-public class Member {
+public class Member extends BaseEntity  {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
