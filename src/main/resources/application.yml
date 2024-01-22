@@ -1,20 +1,22 @@
 server:
   port: 9999
 spring:
+  profiles:
+    include: jwt
   application:
     name: admin_demo_spring
   jpa:
     hibernate:
-      ddl-auto: none
+      ddl-auto: create
     properties:
       hibernate:
         format_sql: true
         # show_sql: true
         default_batch_fetch_size: 1000
   datasource:
-    url: jdbc:postgresql://localhost:5501/XPRODB
-    username: XADMIN
-    password: XADMIN
+    url: jdbc:postgresql://localhost:5432/talk
+    username: postgres
+    password: aegisep1234@
     driver-class-name: org.postgresql.Driver
 
 
