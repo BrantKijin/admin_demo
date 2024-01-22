@@ -78,6 +78,7 @@ public class SpringSecurityConfig {
 
 				.requestMatchers("/static/**").permitAll() //정적 리소스 명시적으로 허용
 
+				.requestMatchers("/signup").permitAll()
 				/*회원가입 요청은 무조건 허용*/
 				.requestMatchers("/api/signup").permitAll()
 				/*로그인 요청 허용*/
