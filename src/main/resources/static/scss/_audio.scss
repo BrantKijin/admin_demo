@@ -1,0 +1,77 @@
+
+.audio-box {
+  padding: 80px 0 92px;
+}
+.audio-list {
+  display: grid; grid-template-columns: repeat(6, 1fr); max-width: 1240px;padding: 40px 0; width: 100%; gap: 40px; place-items: center;
+  li {
+    @include flex_center; border-radius: 20px; @include line(1px, #B0B8C8, 10px); flex-direction: column; padding: 12px; max-width: 156px;
+    span {
+      font-size: 16px; color: #202020;
+    }
+  }
+  &_thum {
+    margin-bottom: 12px; position: relative; overflow: hidden; @include radius(10px); cursor: pointer;
+    img {max-width: 100%;}
+    audio {
+      opacity: 0;
+      height: 0;
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+    audio + label {
+      opacity: 0; height: 0; position: absolute; left: 0; bottom: 0; background: rgba(0,0,0,.5); display: inline-flex; align-items: center; justify-content: center; @include flex_center; text-indent: -9999px; transition: all .1s; pointer-events: none;
+      &:after {
+        content: ""; position: absolute; display: flex; background: url(../images/paly_ico.svg) no-repeat center center; width: 20px; height: 20px;
+      }
+    }
+    &:hover {
+      audio + label {
+        width: 100%; opacity: 1; height: 100%; 
+      }
+    }
+  }
+}
+
+.mp3_label {
+  display: inline-flex; align-items: center; justify-content: center; width: 60px; height: 32px; color: $white; background: #B4BBC7; @include radius(3px);
+}
+
+
+/* 미디어 쿼리 영역 */
+
+@include tablet {
+  .audio-list {
+    grid-template-columns: repeat(3, 1fr); 
+  }
+}
+
+
+@include mobile {
+
+  .audio-list {
+    grid-template-columns: repeat(2, 1fr); 
+  }
+}
+
+
+@media (max-width:500px) {
+  .audio-list {
+    gap: 24px; 
+    li {
+      max-width: 140px;
+    }
+  }
+
+}
+
+
+@media (max-width:320px) {
+  .audio-list {
+    gap: 24px; grid-template-columns: repeat(1, 1fr); 
+    li {
+      max-width: 156px;
+    }
+  }
+}

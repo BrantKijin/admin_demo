@@ -1,0 +1,93 @@
+
+@mixin blind {//캡션역할
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  border: 0;
+  white-space: nowrap;
+  clip: rect(0, 0, 0, 0);
+}
+
+@mixin flex_center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin befo_after {
+  content:"";
+  position: absolute;
+}
+
+
+@mixin ellipsis($lines: 1) {
+  @if ($lines==1) {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  } @else {
+    display: -webkit-box;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: $lines;
+    -webkit-box-orient: vertical;
+  }
+}
+
+
+@mixin bg($name, $path: "../images/", $format: "svg") {
+  background-image: url("#{$path}#{$name}.#{$format}");
+  background-repeat: no-repeat;
+}
+
+@mixin line($size, $color, $radius) {
+  border: $size solid $color;
+  @if $radius != 0 {
+    border-radius: $radius;
+  }
+}
+
+@mixin radius ($size) {
+  border-radius: $size;
+}
+
+@mixin shadow {
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+@mixin underline_ani($size, $sec) {
+  content: "";
+  position: absolute;
+  width: $size;
+  height: 1px; 
+  background: #363636; 
+  left: 0;
+  bottom: -2px;
+  transition: all $sec;
+
+}
+
+@mixin layer_shadow {
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+@mixin mobile {
+  @media (max-width: $mobile) {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @media (min-width: #{$mobile}) and (max-width: #{$tablet - 1px}) {
+    @content;
+  }
+}
+
+@mixin desktop {
+  @media (min-width: #{$desktop}) {
+    @content;
+  }
+}

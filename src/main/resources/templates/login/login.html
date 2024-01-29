@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densitydpi=medium-dpi">
+    <link rel="icon" type="image/x-icon" th:href="@{favicon.ico}">
+    <link rel="stylesheet" href="../css/style.min.css" type="text/css" media="screen"/>
+
+    <script src="../js/jquery-3.6.4.min.js"></script>
+
+    <script>
+ 
+        $(document).ready(function () {
+            $('.input-field').on('keypress', function (event) {
+                // Enter 키의 키코드는 13입니다.
+                if (event.which === 13) {
+                    if ($(this).attr('name') === 'password') {
+                        $('#login_pw_check').trigger('click');
+                    }
+                    // 다음 input 요소로 이동하기 위해 .input-field 클래스를 가진 모든 input 요소를 선택합니다.
+                    var $allInputs = $('.input-field');
+                    // 현재 input 요소의 인덱스를 찾습니다.
+                    var currentIndex = $allInputs.index(this);
+                    // 다음 input 요소의 인덱스를 계산합니다.
+                    var nextIndex = currentIndex + 1;
+                    // 다음 input 요소가 존재하면 해당 요소로 포커스를 이동합니다.
+                    if (nextIndex < $allInputs.length) {
+                        $allInputs.eq(nextIndex).focus();
+                    }
+                }
+            });
+
+
+            const loginForm = $("form"); //form 태그 객체
+            $('#login_pw_check').click(function () {
+                const id = $("#loginId").val();
+                const password = $("#password").val();
+                if (id == '' || password == '') {
+                    alert("ID와 PASSWORD를 입력해주세요");
+                    return;
+                }
+                loginForm
+                    .attr("action", "/login")
+                    .attr("method", "post")
+                    .submit();
+            })
+        });
+    </script>
+
+    <title>XP보이스</title>
+</head>
+
+<body>
+
+<div class="login_content" id="login_bg">
+    <div class="login_box scale_ani">
+        <h1 class="logo mgB36">
+            <img alt="로고" name="XP보이스 로고" src="../images/logo.svg">
+        </h1>
+        <form name="loginForm" class="login_input">
+            <ul>
+                <li class="slide3">
+                    <input type="text" name="loginId" id="loginId" class="input-field" placeholder="아이디를 입력해주세요">
+                    <label for="loginId"><span>아이디</span></label>
+                </li>
+                <li class="slide4">
+                    <input type="password" name="password" id="password" class="input-field" placeholder="비밀번호를 입력해주세요">
+                    <label for="password"><span>비밀번호</span></label>
+                </li>
+                <!--                <li class="slide5 id_check">-->
+                <!--                    <div class="check_txt_btn">-->
+                <!--                        <input type="checkbox" alt="아이디 저장" name="remember-me" id="remember-me">-->
+                <!--                        <label for="remember-me">-->
+                <!--                            <span></span>아이디 저장-->
+                <!--                        </label>-->
+                <!--                    </div>-->
+                <!--                </li>-->
+                <li class="slide6">
+                    <a class="login_btn login_color" id="login_pw_check" href="#">로그인</a>
+                </li>
+            </ul>
+        </form>
+    </div>
+</div>
+
+</body>
+</html>

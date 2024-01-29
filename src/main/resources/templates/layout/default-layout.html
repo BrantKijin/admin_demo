@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title layout:title-pattern="$LAYOUT_TITLE - $CONTENT_TITLE">XP보이스</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densitydpi=medium-dpi">
+    <link rel="stylesheet" href="/css/style.min.css" type="text/css" media="screen"/>
+    <link rel="stylesheet" href="/css/jquery.bxslider.css" type="text/css" media="screen" />
+    <script src="/js/jquery-3.6.4.min.js"></script>
+    <script src="/js/jquery.bxslider.js"></script>
+    <script src="/js/util.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.17.0/dist/jquery.validate.min.js"></script>
+</head>
+<body>
+    <!-- header -->
+    <div th:replace="~{${!#strings.equals('[ROLE_ANONYMOUS]',#authentication.authorities)} ? 'layout/adminHeader' : 'layout/header'}"></div>
+
+    <!-- content -->
+    <th:block layout:fragment="content"></th:block>
+    <input type="text" class="auto_hidden_input" name="fakeusernamerememberd" style="display: none;">
+    <input type="password" class="auto_hidden_input" autocomplete="new-password" name="fakepasswordrememberd" style="display: none;">
+    <!-- footer -->
+    <div th:replace="~{layout/footer}"></div>
+    <script>
+        $(document).ready(function () {
+            $('#hamMenu').on('change', function () {
+                if ($(this).is(':checked')) {
+                    $('body').addClass('no-scroll');
+                } else {
+                    $('body').removeClass('no-scroll');
+                }
+            });
+        });
+        var currentOS = "";
+        var mobile = (/iphone|ipad|ipod|android/i.test(navigator.userAgent.toLowerCase()));
+        if (mobile) {
+            // 유저에이전트를 불러와서 OS를 구분합니다.
+            var userAgent = navigator.userAgent.toLowerCase();
+            if (userAgent.search("android") > -1)
+                currentOS = "android";
+            else if ((userAgent.search("iphone") > -1) || (userAgent.search("ipod") > -1) || (userAgent.search("ipad") > -1)) currentOS = "ios";
+
+            else
+                currentOS = "else";
+        } else {
+            // 모바일이 아닐 때
+            currentOS = "web";
+
+        }
+        if (document.getElementById('auth').value.indexOf("ANONYMOUS") == -1) {
+            $('#warpper').addClass("adminVer");
+        }
+    </script>
+    <style>
+        body.no-scroll {
+            overflow: hidden;
+        }
+    </style>
+</body>
+</html>

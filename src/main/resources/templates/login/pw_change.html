@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densitydpi=medium-dpi">
+
+<link rel="stylesheet" href="../css/style.min.css" type="text/css" media="screen"/>
+
+<script src="../js/jquery-3.6.4.min.js"></script>
+
+
+
+<title>XP보이스</title>
+</head>
+
+<body>
+<div class="login_content" id="login_bg">
+    <div class="login_box scale_ani">
+        <h1 class="main_text">
+            <b>비밀번호 변경</b>
+        </h1>
+
+        <div class="login_input">
+            <ul>
+                <li class="slide4">
+                    <input type="password" name="loginPw" id="loginPw" value="" placeholder="비밀번호를 입력해주세요" size="14" maxlength="12" >
+                    <label for="loginPW"><span>비밀번호</span></label>
+                </li>
+                <li class="slide4">
+                    <input type="password" name="loginPw_ok" id="loginPw_ok" value="" placeholder="비밀번호를 확인해주세요" size="14" maxlength="12">
+                    <label for="loginPW"><span>비밀번호 확인</span></label>
+                </li>
+                <li class="slide6">
+                    <div class="button__box w100">
+                        <a class="button button__Big button__Navy w50" id="login_pw_check">변경</a>
+                        <a class="button button__Big button__gray_line w50" id="btn_three_month">3개월 유지</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<script>
+
+    $(document).ready(function () {
+        var loginId = '[[${loginId}]]';
+        var userIdx = '[[${userIdx}]]'; 
+        $("#btn_three_month").click(function () {
+            var password = $('#loginPw').val()
+            var requestData = JSON.stringify({
+                loginId: loginId,
+                isContinueUse: true
+            });
+            $.ajax({
+                url: "/login-info/password-init/" + userIdx,
+                type: "POST",
+                dataType: "json",
+                data: requestData,
+                contentType: 'application/json',
+                success: function (result) {
+                    if (result.status == 'SUCCESS') {
+                        alert("3개월 유지되었습니다. 다시로그인해주세요.");
+                        window.location.href = "/login"
+                    } else {
+                        alert(result.message);
+                    }
+                },
+                error: function (e) {
+                    alert("비밀번호 변경에 실패하였습니다. 관리자에게 문의바랍니다.");
+                    console.error(e);
+                },
+                beforeSend: function (e) {
+                }
+            });
+        });
+        
+        $("#login_pw_check").click(function () {
+            var password = $('#loginPw').val();
+            var confirmPassword = $('#loginPw_ok').val();
+            if(password==''|| confirmPassword==''){
+                alert("비밀번호, 비밀번호 확인값을 입력해주세요.");
+                return;
+            }
+            // 비밀번호 정책에 대한 정규 표현식을 정의합니다.
+            var passwordPattern = /^(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,12}$/;
+
+            // 비밀번호와 비밀번호 확인 필드의 값이 조건에 맞는지 확인합니다.
+            if (!passwordPattern.test(password)) {
+                alert("비밀번호는 최소 6글자, 최대 12글자이며, 특수문자(@, $, !, %, *, ?, &)를 포함해야 합니다.");
+                return;
+            }
+            if (password != confirmPassword) {  
+                alert("비밀번호와 비밀번호 확인이 일치하지 않습니다.");
+                return;
+            }
+            var password = $('#loginPw').val()
+            var requestData = JSON.stringify({
+                password: password,
+                loginId: loginId,
+                isContinueUse : false
+            });
+            $.ajax({
+                url: "/login-info/password-init/" + userIdx,
+                type: "POST",
+                dataType: "json",
+                data: requestData,
+                contentType: 'application/json',
+                success: function (result) {
+                    if(result.status=='SUCCESS'){
+                        alert("비밀번호가 변경되었습니다.\n변경된 비밀번호로 다시로그인해주세요.");
+                        window.location.href="/login"
+                    }else{
+                        alert(result.message);
+                    }
+                },
+                error: function (e) {
+                    alert("비밀번호 변경에 실패하였습니다. 관리자에게 문의바랍니다.");
+                    console.error(e);
+                },
+                beforeSend: function (e) {
+                }
+            });
+        })
+
+
+    });
+
+
+</script>
+</body>
+</html>

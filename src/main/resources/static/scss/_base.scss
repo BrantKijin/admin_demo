@@ -1,0 +1,574 @@
+@import '_mixin'; //SCSS에서만 추출해서 쓰는 기존 선언타입
+
+$red:  #CD1817; //레드 컬러
+$d-navy: #303139; //다크 네이비
+$blue: #0d35ac;
+$white: #fff; //화이트
+$f_color1: #363636; //폰트 컬러
+$f_color2: #666; //폰트 컬러
+$f_color3: #999; //폰트 컬러
+$wh100: 100%; //100%
+$font: "suit"; //폰트 이름
+$line_c1: #ccc;
+$line_c2: #e6e6e6;
+$line_c3: #eee;
+
+.t_center { text-align: center !important;}
+.t_left {text-align: left !important;}
+.t_right {text-align: right !important;}
+
+.f-left {justify-content: left !important;;}
+.f-right {justify-content: right !important;;}
+.f-center {justify-content: center !important;;}
+
+/* 폰트 사이즈 */
+.fs12 {font-size: 12px !important}
+.fs13 {font-size: 13px !important}
+.fs14 {font-size: 14px !important}
+.fs15 {font-size: 15px !important}
+.fs16 {font-size: 16px !important}
+.fs17 {font-size: 17px !important}
+.fs18 {font-size: 18px !important}
+.fs19 {font-size: 19px !important}
+.fs20 {font-size: 20px !important}
+
+.f_c_red {
+    color: #CD1817 !important;
+}
+.f_c_36 {color: $f_color1 !important;}
+.f_c_666 {color: $f_color2 !important;}
+.f_c_999 {color: $f_color3 !important;}
+
+
+.main_title1 {font-size: 28px;}
+.sub_title1 {font-size: 24px;}
+.sub_title2 {font-size: 20px;}
+.sub_title3 {font-size: 18px;}
+.sub_title4 {font-size: 16px; font-weight: 400;}
+
+
+.txt_highlight {
+    position: relative;
+    &:before {
+        @include befo_after; width: 100%; height: 18px; background: rgba(13, 54, 172, 0.2); left: 0; bottom: 0;
+    }
+    
+}
+
+
+.x_icon {
+    &_small {
+        width: 20px; height: 20px; background: url(../images/x_icon.svg) no-repeat center center; background-size: 12px; display: block; text-indent: -9999px; overflow: hidden;
+    }
+    &_large {
+        width: 20px; height: 20px; background: url(../images/x_icon.svg) no-repeat center center; background-size: 18px; display: block; text-indent: -9999px; overflow: hidden;
+    }
+    
+ }
+
+
+label.error {
+    display: flex; position: absolute; bottom: -15px; width: 100%; height: 24px; border: 1px solid $red; border-width: 0 1px 1px 1px; background: $white; z-index: 1; padding-left: 20px; color: $red
+}
+
+.error {
+    border-color: $red !important;
+}
+
+.selectbox {
+    position:relative; display: flex; height: 36px; box-sizing: border-box; z-index: 1; background: transparent;
+    &:before {
+        content: "";
+        position: absolute;
+        top: 40%;
+        right: 16px;
+        width: 8px; height: 8px;
+        border: 2px solid #202020;
+        border-width:  0 1px 1px 0;
+        transform: rotate(45deg);
+    }
+    & label {
+        position: absolute;
+        left: 16px;
+        color: #999;
+        z-index: -1;
+        position:absolute;font-size:14px;color:#000; font-weight:bold; 
+        line-height: 34px;
+    }
+    & select {
+        width:100%; appearance: none; border: 1px solid #d7d7d7;  
+        &:focus {
+            outline: 1px solid #0d35ac;
+        }
+    }
+    
+    & select + label {
+        color: red;
+    }
+}
+  
+ 
+  
+
+.button__box {
+    display: flex; align-items: center; justify-content: center;
+    .button {
+         margin-right: 8px;
+         &:last-child {margin: 0;}
+    }
+
+}
+
+
+
+.button {
+  @include flex_center; cursor: pointer;   @include radius(3px);
+  &:focus, &:active {
+
+  }
+  &__Big {//.buttop__Big
+      height: 40px; font-size: 16px; font-weight: 600; padding: 0 12px;
+  }
+  &__Basic {//.button__Basic
+      height: 36px; font-size: 15px; padding: 0 12px;
+  }
+  &__Small {//.button__Small
+      height: 32px; font-size: 14px;  padding: 0 12px;
+  }
+  &__Navy {
+    background: #0d35ac; color: $white; transition: all .3s;
+  }
+  &__darkNavy {//.button__red 버튼 배경
+      background: #2D384A; color: $white; transition: all .3s;
+  }
+  &__gray {//.button__gray 버튼 배경
+      background: #ccc; color: $white; transition: all .3s;
+  }
+  &__Green {
+    background: #0F7B41; color: $white; transition: all .3s;
+  }
+  &__darkGray {//.button__gray 버튼 배경
+      background: #666; color: $white; transition: all .3s;
+  }
+
+  &__black {//.button__black 버튼 배경
+      background: #363636; color: $white; transition: all .3s;
+  }
+  &__White {//.button__white 버튼 화이트
+      background: $white; border: 1px solid #2D384A; color: #2D384A; transition: all .3s;
+      &:focus, &:active {
+          border-color: #363636;
+      }
+  }
+  &__black_line {//.button__black_line 버튼 배경
+      background: $white; border: 1px solid #363636; color: #363636;
+  }
+  &__darkGray_line {//.button__black_line 버튼 배경
+      background: $white; border: 1px solid #666; color: #666;
+  }
+  &__gray_line {//.button__black_line 버튼 배경
+    background: $white; border: 1px solid #ccc; color: #666;
+  }
+
+  &__round {
+    @include radius(30px);
+  }
+}
+
+
+/* 체크박스 스타일 */
+.check_txt_btn {display: flex; position: relative;
+    input[type=checkbox] {
+        opacity: 0; position: absolute; left: 0;
+        & + label {
+            display: flex;height: 100%;position: relative;cursor: pointer;padding-left: 32px;align-items: center;font-size: 16px;color: #252525;line-height: 1.8;
+            &:before {content: "";position: absolute;height: 22px;width: 22px;display: block;top: 50%;transform: translateY(-50%);left: 3px;border: 1px solid #dfdfdf;background: #fff;transition: all 0.2s;}
+            span {
+                position: absolute;height: 7px;width: 13px;left: 6px;top: 10px;transform: rotate(-45deg);z-index: 3;
+                &:before {left: 3px;top: 0;width: 2px;height: 0;transition: all 0.1s  linear 0.1s;position: absolute;background: #fff;content:"";}
+                &:after {left: 3px;bottom: 0;width: 0;height: 2px;transition: all 0.1s;position: absolute;background: #fff;content:"";}
+            }
+            &:hover {
+                color: #0d35ac
+            }
+        }
+        &:focus + label, &:checked + label {
+            color: #0d35ac;
+            &:before { border-color: #0d35ac}
+        }
+        &:checked + label {
+            &:before {
+                background: #0d35ac; border-color: #0d35ac
+            }
+            &:after {
+                border-color: #fff; -webkit-transform: rotate(-405deg) translateY(-50%); -ms-transform: rotate(-405deg)  translateY(-50%); transform: rotate(-405deg)  translateY(-50%);
+            }
+            span {
+                &:before {
+                    height: 100%; transition: all 0.1s; 
+                }
+                &:after {
+                    width: 100%; transition: all 0.1s linear 0.1s;
+                }
+            }
+        }
+    }
+    label.error {
+        position: absolute; left: 30px; bottom: -25px;display: inline-flex; align-items: center; width: 100%; height: 24px; border: none; background: rgba(0,0,0,0);   padding: 0; color: $red;
+    }
+}
+
+/* 커스텀 라디오 버튼 스타일 */
+.radio-box {
+    display: flex; position: relative;
+    input[type=radio] {
+        opacity: 0; position: absolute; left: 0;
+        & + label { //라디오 + 네임 같이 사용시 Label
+            display: flex; height: 100%; position: relative; cursor: pointer;  padding-left: 32px; align-items: center; height: 28px; font-size: 16px;
+            .r_circle { //서클타입
+                position: relative; @include flex_center;
+            }
+            &::before {@include befo_after; width: 22px; height: 22px; transition: all 0.3s ease-in-out; left: 0;  top: 50%; background: transparent; @include radius(20px); border: 1px solid transparent; transform: translateY(-50%);}
+            &::after  {@include befo_after; width: 22px; height: 22px; transition: all 0.3s ease-in-out; left: 0;  top: 50%; background: $white; @include radius(20px); border: 1px solid $line_c2; transform: translateY(-50%);}
+        }
+        &:focus + label { //라디오 포커스 경우
+            &::before {
+                border-color: #0d35ac;
+            }
+        }
+        &:checked + label { //라디오 체크 경우
+            &::before {
+                background: #0d35ac;
+            }
+            &::after {
+                width: 12px; height: 12px; left: 5px; background: $white; border-color: $white;
+            }
+        }
+    }   
+}
+
+
+/* 필수값 입력 영역
+*/
+.essential_type {
+  position: relative; top: -9px;
+  &:after {
+    content:""; width: 3px; height: 3px; border-radius: 50%; background: #FF1010; position: absolute; right: -5px; top: 3px;
+  }
+
+}
+
+.v_line {
+    width: 1px; height: 12px; background: #c0c0c0; display: inline-flex; margin: 0 12px;
+} 
+
+
+.filebox {
+    display: flex; gap: 8px;
+    .upload-name {
+    display: inline-block;
+    height: 40px;
+    padding: 0 10px;
+    vertical-align: middle;
+    border: 1px solid #dddddd;
+    width: calc(100% - 108px);
+    color: #999999;
+    }
+    label {
+        @include flex_center;
+        @include radius(3px);
+        width: 100%;
+        max-width: 88px;
+        color: #fff;
+        vertical-align: middle;
+        background-color: #2D384A;
+        cursor: pointer;
+        height: 40px;
+    }
+    input[type="file"] {
+        position: absolute;
+        width: 0;
+        height: 0; 
+        padding: 0;
+        overflow: hidden;
+        border: 0;
+        display: none;
+    }
+    &_list {
+        display: flex; flex-direction: column; padding: 12px 0;
+        li {
+          display: flex; justify-content: space-between; margin-bottom: 8px;
+          &:last-child {
+            margin-bottom: 0;
+          }
+        }
+    } 
+}
+
+
+.caption {
+    overflow: hidden;
+    width: 0;
+    height: 0;
+    font-size: 0;
+    line-height: 0;
+    text-indent: -9999px;
+    display: block;
+  } 
+
+
+[class*="col-"] {
+  float: left;
+  margin: 0 12px;
+}
+
+.col-1 {width: calc(8.33% - 24px);}
+.col-2 {width: calc(16.66% - 24px);}
+.col-3 {width: calc(25% - 24px);}
+.col-4 {width: calc(33.33% - 24px);}
+.col-5 {width: calc(41.66% - 24px);}
+.col-6 {width: calc(50% - 24px);}
+.col-7 {width: calc(58.33% - 24px);}
+.col-8 {width: calc(66.66% - 24px);}
+.col-9 {width: calc(75% - 24px);}
+.col-10 {width: calc(83.33% - 24px);}
+.col-11 {width: calc(91.66% - 24px);}
+.col-12 {width: calc(100% - 24px);}
+
+/* 너비 지정 스타일 */
+.w100		{width:100% !important;}
+.w80		{width:80% !important;}
+.w75		{width:75% !important;}
+.w70		{width:70% !important;}
+.w65		{width:65% !important;}
+.w60		{width:60% !important;}
+.w55		{width:55% !important;}
+.w50		{width:50% !important;}
+.w45		{width:45% !important;}
+.w40		{width:40% !important;}
+.w35		{width:35% !important;}
+.w30		{width:30% !important;}
+.w25		{width:25% !important;}
+.w20		{width:20% !important;}
+.w15		{width:15% !important;}
+.w10		{width:10% !important;}
+
+.w30p		{width:30px !important;}
+.w40p		{width:40px !important;}
+.w50p		{width:50px !important;}
+.w60p		{width:60px !important;}
+.w64p		{width:64px !important;}
+.w68p		{width:68px !important;}
+.w72p		{width:72px !important;}
+.w76p		{width:76px !important;}
+.w80p		{width:80px !important;}
+.w84p		{width:84px !important;}
+.w88p		{width:88px !important;}
+.w92p		{width:92px !important;}
+.w96p		{width:96px !important;}
+.w100p		{width:100px !important;}
+.w104p		{width:104px !important;}
+.w108p		{width:108px !important;}
+.w110p		{width:110px !important;}
+.w110p		{width:112px !important;}
+.w120p		{width:120px !important;}
+.w124p		{width:124px !important;}
+.w128p		{width:128px !important;}
+.w140p		{width:140px !important;}
+.w160p		{width:160px !important;}
+.w176p		{width:176px !important;}
+.w180p		{width:180px !important;}
+.w200p		{width:200px !important;}
+.w210p		{width:210px !important;}
+.w220p		{width:220px !important;}
+.w230p		{width:230px !important;}
+.w240p		{width:240px !important;}
+.w250p		{width:250px !important;}
+.w280p		{width:280px !important;}
+.w300p		{width:300px !important;}
+.w320p		{width:320px !important;}
+.w350p		{width:350px !important;}
+.w380p		{width:380px !important;}
+.w400p		{width:400px !important;}
+.w420p		{width:420px !important;}
+.w440p		{width:440px !important;}
+.w450p		{width:450px !important;}
+.w470p		{width:470px !important;}
+.w500p		{width:500px !important;}
+.w550p		{width:500px !important;}
+.w600p		{width:500px !important;}
+
+.h100 {height: 100% !important}
+
+.h12p		{height:12px !important;}
+.h16p		{height:16px !important;}
+.h20p		{height:20px !important;}
+.h24p		{height:24px !important;}
+.h28p		{height:28px !important;}
+.h32p		{height:32px !important;}
+.h36p		{height:36px !important;}
+.h40p		{height:40px !important;}
+.h44p		{height:44px !important;}
+.h48p		{height:48px !important;}
+.h52p		{height:52px !important;}
+.h56p		{height:56px !important;}
+.h60p		{height:60px !important;}
+
+
+.mg0 	{margin: 0		!important;}
+.mgT0	{margin-top:0px !important;}
+.mgT4	{margin-top:4px !important;}
+.mgT8	{margin-top:8px !important;}
+.mgT12	{margin-top:12px !important;}
+.mgT16	{margin-top:16px !important;}
+.mgT20	{margin-top:20px !important;}
+.mgT24	{margin-top:24px !important;}
+.mgT28	{margin-top:28px !important;}
+.mgT32	{margin-top:32px !important;}
+.mgT36	{margin-top:36px !important;}
+.mgT40	{margin-top:40px !important;}
+
+.mgB0	{margin-bottom:0px !important;}
+.mgB4	{margin-bottom:4px !important;}
+.mgB8	{margin-bottom:8px !important;}
+.mgB12	{margin-bottom:12px !important;}
+.mgB16	{margin-bottom:16px !important;}
+.mgB20	{margin-bottom:20px !important;}
+.mgB24	{margin-bottom:24px !important;}
+.mgB28	{margin-bottom:28px !important;}
+.mgB32	{margin-bottom:32px !important;}
+.mgB36	{margin-bottom:36px !important;}
+.mgB40	{margin-bottom:40px !important;}
+
+.mgR0	{margin-right:0 !important;}
+.mgR4	{margin-right:4px !important;}
+.mgR8	{margin-right:8px !important;}
+.mgR12	{margin-right:12px !important;}
+.mgR16	{margin-right:16px !important;}
+.mgR20	{margin-right:20px !important;}
+.mgR24	{margin-right:24px !important;}
+.mgR28	{margin-right:28px !important;}
+.mgR32	{margin-right:32px !important;}
+.mgR36	{margin-right:36px !important;}
+.mgR40	{margin-right:40px !important;}
+
+.mgL0	{margin-left:0 !important;}
+.mgL4	{margin-left:4px !important;}
+.mgL8	{margin-left:8px !important;}
+.mgL12	{margin-left:12px !important;}
+.mgL16	{margin-left:16px !important;}
+.mgL20	{margin-left:20px !important;}
+.mgL24	{margin-left:24px !important;}
+.mgL28	{margin-left:28px !important;}
+.mgL32	{margin-left:32px !important;}
+.mgL36	{margin-left:36px !important;}
+.mgL40	{margin-left:40px !important;}
+
+.mg20	{margin: 20px 0 !important;}
+.mg30	{margin: 30px 0 !important;}
+.mgLAuto {margin-left: auto !important;}
+.mgRAuto {margin-right: auto !important;}
+
+.pd0  {padding: 0     !important;}
+.pdT0	{padding-top:0px !important;}
+.pdT4	{padding-top:4px !important;}
+.pdT8	{padding-top:8px !important;}
+.pdT12	{padding-top:12px !important;}
+.pdT16	{padding-top:16px !important;}
+.pdT20	{padding-top:20px !important;}
+.pdT24	{padding-top:24px !important;}
+.pdT28	{padding-top:28px !important;}
+.pdT32	{padding-top:32px !important;}
+.pdT36	{padding-top:36px !important;}
+.pdT40	{padding-top:40px !important;}
+
+.pdB0	{padding-bottom:0px !important;}
+.pdB4	{padding-bottom:4px !important;}
+.pdB8	{padding-bottom:8px !important;}
+.pdB12	{padding-bottom:12px !important;}
+.pdB16	{padding-bottom:16px !important;}
+.pdB20	{padding-bottom:20px !important;}
+.pdB24	{padding-bottom:24px !important;}
+.pdB28	{padding-bottom:28px !important;}
+.pdB32	{padding-bottom:32px !important;}
+.pdB36	{padding-bottom:36px !important;}
+.pdB40	{padding-bottom:40px !important;}
+
+.pdR4	{padding-right:4px !important;}
+.pdR8	{padding-right:8px !important;}
+.pdR12	{padding-right:12px !important;}
+.pdR16	{padding-right:16px !important;}
+.pdR20	{padding-right:20px !important;}
+.pdR24	{padding-right:24px !important;}
+.pdR28	{padding-right:28px !important;}
+.pdR32	{padding-right:32px !important;}
+.pdR36	{padding-right:36px !important;}
+.pdR40	{padding-right:40px !important;}
+
+.pdL4	{padding-left:4px !important;}
+.pdL8	{padding-left:8px !important;}
+.pdL12	{padding-left:12px !important;}
+.pdL16	{padding-left:16px !important;}
+.pdL20	{padding-left:20px !important;}
+.pdL24	{padding-left:24px !important;}
+.pdL28	{padding-left:28px !important;}
+.pdL32	{padding-left:32px !important;}
+.pdL36	{padding-left:36px !important;}
+.pdL40	{padding-left:40px !important;}
+
+.pd20 {padding: 20px !important;}
+.pdLR24 {padding: 0 24px !important}
+
+
+// Breakpoints
+$mobile: 720px;
+$tablet: 1100px;
+$desktop: 1101px;
+
+
+/* 에러 페이지 */
+.error-cont {
+    @include flex_center; flex-direction: column; flex:1;
+    h3 {
+        font-size: 28px; color: #2D384A; font-weight: 400; margin: 36px 0 24px;
+    }
+    p {
+        font-size: 20px; font-weight: 300; line-height: 28px;
+    }
+    .error_btn {
+        width: 260px; height: 68px; font-size: 20px; font-weight: 300; margin-top: 56px;
+        &:after {
+            content: ""; position: relative; display: inline-flex; align-items: center; width: 10px; height: 10px; border: 2px solid $white; border-width: 2px 2px 0 0; transform: rotate(45deg); margin-left: 20px;
+        }
+    }
+}
+
+@include mobile {
+
+    .error-cont {
+        @include flex_center; flex-direction: column; flex:1;
+        h3 {
+            font-size: 24px; color: #2D384A;
+        }
+        p {
+            font-size: 16px; font-weight: 300; line-height: 28px; letter-spacing: -0.75px;
+        }
+        .error_btn {
+            margin-top: 40px;
+        }
+    }
+  
+}
+
+@media (max-width:320px) {
+    .error-cont {
+        @include flex_center; flex-direction: column; flex:1;
+        h3 {
+            margin: 24px 0 16px;
+        }
+        p {
+            font-size: 14px; font-weight: 300; line-height: 21px; letter-spacing: -0.75px;
+        }
+    }
+}
+

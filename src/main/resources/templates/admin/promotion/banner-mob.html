@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{layout/default-layout}">
+
+<head>
+    <title>XP보이스-배너관리</title>
+</head>
+
+<body layout:fragment="content">
+
+    <div id="warpper" class="adminVer">
+	<div class="cont">
+        <div class="admin_sec">
+            <div class="admin-tit">
+                <h4>배너관리</h4>
+                <div class="button__box mgLAuto">
+                    <button type="button" class="button__Big button__Navy button w100p">  
+                        배너 등록
+                    </button>
+                </div>
+            </div>
+            <div class="admin-list_m">
+                <ul>
+                    <li th:each="dto : ${result.dtoList}" th:onclick="detail_page([[${dto.id}]])" style="cursor: pointer" title="상세페이지">
+                        <a>
+                            <span class="dangi_name">
+                                [[${dto.title}]]
+                            </span>
+                            <span class="date">
+                                [[${dto.startDate}]] ~ [[${dto.endDate}]]
+                            </span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="page-box">
+                <div class="page-box_list">
+                    <div class="prev_btn" th:if="${result.prev}">
+                        <a th:href="@{/admin/promotion/banner-mob?type=배너(page= ${result.start -1},
+                                                                    type=${pageRequestDTO.type} ,
+                                                                    keyword = ${pageRequestDTO.keyword} ) }" tabindex="-1">
+                            <span class="caption">이전</span>
+                        </a>
+                    </div>
+            
+                    <div class="page_num">
+                        <div th:each="page: ${result.pageList}">
+                            <a th:class=" 'page-item ' + ${result.page == page?'active':''} " th:href="@{/admin/promotion/banner-mob?type=배너(page = ${page} ,
+                                                                type=${pageRequestDTO.type} ,
+                                                                keyword = ${pageRequestDTO.keyword}  )}">[[${page}]]</a>
+                        </div>
+                    </div>
+                    <div class="next_btn" th:if="${result.next}">
+                        <a th:href="@{/admin/promotion/banner-mob?type=배너(page= ${result.end + 1},
+                                                                    type=${pageRequestDTO.type} ,
+                                                                    keyword = ${pageRequestDTO.keyword} ) }"><span
+                                class="caption">다음</span></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        
+    </div>
+</div>
+<script>
+    function detail_page(id) {
+        location.href = '/admin/promotion/banner-detail/' + id + "?type=배너"
+        // window.open('/admin/promotion/banner-detail/' + id+"?type=배너", '_blank');
+    }
+</script>
+</body>
+</html>

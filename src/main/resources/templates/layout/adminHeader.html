@@ -1,0 +1,199 @@
+
+<div class="header adminVer">
+    <div class="warp">
+        <h1 class="logo">
+            <a th:href="@{/}">로고</a>
+        </h1>
+        <ul class="t_menu">
+            <li><a th:href="@{/home/function}" class="menuTab function-tab">주요기능</a></li>
+            <li><a th:href="@{/data/sound-track}" class="menuTab soundtrack-tab">음성샘플</a></li>
+            <li><a id="subMenu" class="menuTab comunity-tab">커뮤니티</a></li>
+            <li><a th:href="@{/main/voice-request}" class="menuTab voice-request-tab">상담신청</a>
+            <li><a id="adminMenu" class="menuTab admin-tab">관리자모드</a></li>
+            <li><a class="menuTab" href="/logout">로그아웃</a></li>
+        </ul>
+    </div>
+    <div class="sub_menu" >
+        <div class="admin_menu">
+            <div class="admin_info">
+                <b>[[${#authentication.name}]]</b>
+                <span class="f_c_red"  id="sessionTimeOut"></span>
+                <button type="button" class="button button__Small button__gray_line h24p w64p" onclick="redirect_url()">연장하기</button>
+            </div>
+            <ul class="t_menu" id="board_sub" style="display:none">
+                <li><a th:href="@{/board/index}" class="menuTab board-tab">게시판</a></li>
+                <li><a class="menuTab"
+                        href="https://prod-xpvoice-s3.s3.ap-northeast-2.amazonaws.com/COMMON/XP%EB%B3%B4%EC%9D%B4%EC%8A%A4+%EB%A7%A4%EB%89%B4%EC%96%BC_v3.pdf"
+                        target="_blank">사용매뉴얼</a></li>
+                <li><a class="menuTab"
+                        href="https://prod-xpvoice-s3.s3.ap-northeast-2.amazonaws.com/COMMON/Xp%EB%B3%B4%EC%9D%B4%EC%8A%A4_%EC%86%8C%EA%B0%9C%EC%84%9C_v3.pdf"
+                        target="_blank">제안서</a></li>
+                <li><a th:href="@{/voice-board/index}" class="menuTab voiceboard-tab">방송자료실</a></li>
+                <!-- 다른 메뉴 항목들도 여기에 추가 -->
+            </ul>
+            <ul class="admin_sub_menu" id="admin_sub">
+                <li sec:authorize="hasAuthority('ADMIN')"><a th:href="@{/admin/voice-info}" class="menuTab voiceinfo-tab" >상담신청현황</a></li>
+                <li><a th:href="@{/admin/voice-info/install}"  class="menuTab install-tab">설치단지현황</a></li>
+                <li sec:authorize="hasAuthority('ADMIN')"><a th:href="@{/admin/promotion/banner?type=배너}"  class="menuTab banner-tab">배너관리</a></li>
+                <li sec:authorize="hasAuthority('ADMIN')"><a th:href="@{/admin/promotion/popup-detail}" class="menuTab popup-tab">팝업관리</a></li>
+                <li sec:authorize="hasAuthority('ADMIN')"><a th:href="@{/admin/sound-track}"  class="menuTab adsoundtrack-tab">음성샘플관리</a></li>
+                <li sec:authorize="hasAuthority('ADMIN')"><a th:href="@{/admin/login-info}" class="menuTab logininfo-tab">회원관리</a></li>
+            </ul>
+        </div>
+    </div>
+    <!-- 모바일 메뉴 -->
+    <div class="m_menu">
+        <h1 class="logo">
+            <a th:href="@{/}">로고</a>
+        </h1>
+        <input type="checkbox" id="hamMenu" class="ham-menu">
+        <label for="hamMenu"> <!--label은 인라인 스타일-->
+            <span></span>
+            <span></span>
+            <span></span>
+        </label>
+        <div id="header">
+            <div class="admin_info">
+                <h4>내정보</h4>
+                <b>[[${#authentication.name}]]</b>
+                <span class="f_c_red" id="sessionTimeOutMob"></span>
+                <div class="admin_txt_btn">
+                    <a href="/logout">로그아웃</a>
+                    <a href="#" onclick="redirect_url()">연장하기</a>
+                </div>
+            </div>
+            <ul>
+                <li><a th:href="@{/}">홈</a></li>
+                <li><a th:href="@{/home/function}">주요기능</a></li>
+                <li><a th:href="@{/data/sound-track}">음성샘플</a></li>
+                <li>
+                    <input type="checkbox" id="toggle_menu1" class="toggle_menu">
+                    <label for="toggle_menu1">커뮤니티</label>
+                    <ul class="toggle_list">
+                        <li><a th:href="@{/board/index-mob}">게시판</a></li>
+                        <li><a href="https://prod-xpvoice-s3.s3.ap-northeast-2.amazonaws.com/COMMON/XP%EB%B3%B4%EC%9D%B4%EC%8A%A4+%EB%A7%A4%EB%89%B4%EC%96%BC_v3.pdf">사용매뉴얼</a></li>
+                        <li><a href="https://prod-xpvoice-s3.s3.ap-northeast-2.amazonaws.com/COMMON/Xp%EB%B3%B4%EC%9D%B4%EC%8A%A4_%EC%86%8C%EA%B0%9C%EC%84%9C_v3.pdf">제안서</a></li>
+                        <li><a th:href="@{/voice-board/index-mob}">방송자료실</a></li>
+                    </ul>
+                </li>
+                <li><a th:href="@{/main/voice-request}">상담신청</a></li>
+                <li>
+                    <input type="checkbox" id="toggle_menu2" class="toggle_menu">
+                    <label for="toggle_menu2">관리자모드</label>
+                    <ul class="toggle_list">
+                        <li sec:authorize="hasAuthority('ADMIN')"><a th:href="@{/admin/voice-info-mob}" >상담신청현황</a></li>
+                        <li><a th:href="@{/admin/voice-info/install-mob}">설치단지현황 </a></li>
+                        <li sec:authorize="hasAuthority('ADMIN')"><a th:href="@{/admin/promotion/banner-mob?type=배너}">배너관리</a></li>
+                        <li sec:authorize="hasAuthority('ADMIN')"><a th:href="@{/admin/promotion/popup-detail}" >팝업관리</a></li>
+                        <li sec:authorize="hasAuthority('ADMIN')"><a th:href="@{/admin/sound-track-mob}" >음성샘플관리 </a></li>
+                        <li sec:authorize="hasAuthority('ADMIN')"><a th:href="@{/admin/login-info-mob}" >회원관리 </a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+    </div>
+    <div class="load_bg" style="display: none">
+        <span class="loader-1"> </span>
+    </div>
+    <input type="hidden" id="sessionTime" th:value="${#dates.format(sessionExpirationTime, 'yyyy-MM-dd HH:mm:ss')}"></input>
+    <input type="hidden" id="auth" th:value="${#authentication.authorities}"></input>
+    <script>
+        $(document).ready(function () {
+            $(window).scroll(function () {
+                $(".slideanim ").each(function () {
+                    var pos = $(this).offset().top;
+                    var winTop = $(window).scrollTop();
+                    if (pos < winTop + 1000) {
+                        $(this).addClass("slide");
+                        $('.header').addClass("fixed");
+                        $('.scroll_view').addClass("on");
+                    } else if (winTop == 0) {
+                        $('.header').removeClass("fixed");
+                        $('.scroll_view').removeClass("on");
+                        $(this).removeClass("slide");
+                    }
+                    $(".main_txt").click(function () {
+
+                    });
+                });
+
+            });
+
+            $("#subMenu").hover(
+                function () {
+                    // 마우스 호버 이벤트가 발생했을 때
+                    $(".sub_menu").addClass("on");
+                    $("#admin_sub").css('display', 'none');
+                    $("#board_sub").css('display', 'flex');
+                    
+                }
+            );
+
+            $("#adminMenu").hover(
+                function () {
+                    // 마우스 호버 이벤트가 발생했을 때
+                    $(".sub_menu").addClass("on");
+                    $("#admin_sub").css('display', 'flex');
+                    $("#board_sub").css('display', 'none');
+                }
+            );
+            
+
+            $(".header").mouseleave(function () {
+                $(".sub_menu").removeClass("on");
+            });
+
+        });
+
+        
+
+        if (document.getElementById('auth').value.indexOf("ANONYMOUS") == -1) {
+            var intervalId = '';
+
+            intervalId = setInterval(sessionCheck, 1000);
+        }
+        function sessionCheck() {
+            var sessionExpirationTime = new Date(document.getElementById('sessionTime').value);
+            var nowDate = new Date();
+            var sessionExpire = sessionExpirationTime - nowDate;
+            var minute = Math.floor((sessionExpire % (1000 * 60 * 60)) / (1000 * 60));
+            var second = Math.floor((sessionExpire % (1000 * 60)) / 1000);
+            document.getElementById('sessionTimeOut').innerText = "남은 시간: " + minute + "분 " + second + "초", sessionExpire;
+            document.getElementById('sessionTimeOutMob').innerText = "남은 시간: " + minute + "분 " + second + "초", sessionExpire;
+            if (sessionExpire <= 0) {
+                clearInterval(intervalId);
+                $.ajax({
+                    type: "GET",
+                    url: "/session-check",
+                })
+                    .done(function (result) {
+                        console.info("완료");
+                    })
+                    .fail(function (jqXHR) {
+                        console.error(jqXHR);
+                    })
+                console.info("세션 만료!");
+                location.href = "/login";
+            }
+        }
+        
+        function redirect_url() {
+                $.ajax({
+                    url: "/redirect", // API 엔드포인트 URL
+                    method: "GET",
+                    success: function (response) {
+                        // API 요청이 성공하면 형식화된 세션 만료 시간을 사용합니다.
+                        console.info("세션 만료 시간: " + response);
+
+                        document.getElementById('sessionTime').value = response;
+                        sessionCheck();
+                        // 원하는 동작을 수행하거나 표시합니다.
+                    },
+                    error: function () {
+                        console.error("API 호출에 실패했습니다.");
+                    }
+                });
+            }
+    </script>
+</div>

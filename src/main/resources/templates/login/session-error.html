@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/default-layout}">
+
+<head>
+    <title>XP보이스-세션이 만료되었습니다.</title>
+</head>
+
+<body layout:fragment="content">
+
+<!-- 컨텐츠 기본 영역 -->
+<div id="warpper">
+
+    <div class="cont">
+
+        <div class="error-cont">
+
+            <img title="에러이미지" src="/images/error.svg">
+            <h3>
+                세션이 만료되었습니다!
+            </h3>
+            <div class="button__Box">
+                <a class="button button__darkNavy error_btn" th:href="@{/login}">
+                    로그인 창으로 이동
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 컨텐츠 기본 영역 END-->
+
+</body>
+</html>

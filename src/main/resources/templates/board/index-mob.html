@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lagn="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    xmlns="http://www.w3.org/1999/html" layout:decorate="~{layout/default-layout}">
+
+<head>
+    <title>공지사항&게시판</title>
+
+<body layout:fragment="content">
+<div id="warpper">
+    <div class="sub-box bg04">
+        <div class="sub-box mask">
+            <div class="sub-box_tit">
+                <h3>
+                    커뮤니티
+                </h3>
+                <span>공지사항 및 다양한 방송자료들이 있습니다.</span>
+            </div>
+        </div>
+    </div>
+        <div class="board_sec">
+            <div class="board-tit">
+                <h4>게시판</h4>
+                <div class="button__box mgLAuto">
+                    <div class="board-search">
+                        <div class="selectbox">
+                            <select id="searchOpt" name="searchOpt">
+                                <option value="title">제목</option>
+                                <option value="writer">작성자</option>
+                            </select>
+                        </div>
+                        <input type="search" class="board-search__input" title="검색입력" id="searchInput">
+                        <button class="board-search__btn" type="button" title="검색" id=btn-search>검색</button>
+                    </div>
+                </div>
+            </div>
+            <div class="board-list_m">
+                <ul>
+                    <li  class="bold-row" th:each="dto : ${result.dtoList}" th:onclick="password_confirm([[${dto.id}]],[[${dto.titleType}]])">
+                        <a>
+                            <span class="tag" th:if="${dto.titleType == null and dto.hasComment == false}">문의</span>
+                            <span class="tag complete" th:if="${dto.titleType == null and dto.hasComment}">답변완료</span>
+                            
+                            <span class="board_name">
+                                <span class="link"><span th:if="${dto.titleType != null}">&#91;[[${dto.titleType}]]&#93;</span>[[${dto.title}]]</span>
+                                <span th:if="${dto.titleType == null}">
+                                    <span class="secret_ico">자물쇠</span>
+                                </span>
+                                <span class="new_ico"><input type='hidden' th:id="'new_ico_'+${dto.id}" th:value="${dto.createdAt}" /></span>
+                            </span>
+                            <span class="date">
+                                <span>[[${dto.createdAt}]]</span>
+                            </span>
+                            <span class="cell_num">
+                                [[${dto.writer}]]
+                            </span>
+                        </a>
+                    </li>
+
+                </ul>
+            </div>
+            <div class="page-box">
+                <div class="page-box_list">
+                    <div class="prev_btn" th:if="${result.prev}">
+                        <a th:href="@{/board/index-mob(page= ${result.start -1},
+                                                                    type=${pageRequestDTO.type} ,
+                                                                    keyword = ${pageRequestDTO.keyword},
+                                                                    title=${param.title},
+                                                                    writer=${param.writer} ) }" tabindex="-1">
+                            <span class="caption">이전</span>
+                        </a>
+                    </div>
+            
+                    <div class="page_num">
+                        <div th:each="page: ${result.pageList}">
+                            <a th:class=" 'page-item ' + ${result.page == page?'active':''} " th:href="@{/board/index-mob(page = ${page} ,
+                                                                type=${pageRequestDTO.type} ,
+                                                                keyword = ${pageRequestDTO.keyword},
+                                                                title=${param.title},
+                                                                writer=${param.writer}  )}">[[${page}]]</a>
+                        </div>
+                    </div>
+                    <div class="next_btn" th:if="${result.next}">
+                        <a th:href="@{/board/index-mob(page= ${result.end + 1},
+                                                                    type=${pageRequestDTO.type} ,
+                                                                    keyword = ${pageRequestDTO.keyword},
+                                                                    title=${param.title},
+                                                                    writer=${param.writer} ) }"><span
+                                class="caption">다음</span></a>
+                    </div>
+                </div>
+                <button class="button button__Big button__Navy writeBtn" id="btn-write-manager"
+                    sec:authorize="hasAuthority('ADMIN')">공지사항 등록</button>
+                <button class="button button__Big button__Navy writeBtn" id="btn-write"
+                    sec:authorize="!hasAuthority('ADMIN')">글쓰기</button>
+            </div>
+        </div>
+        <div class="layer-bg" id="pw_layer" style="display: none;">
+            <div class="layer-cont w280p">
+                <button type="button" class="close_btn" style="cursor: pointer">
+                    닫기
+                </button>
+                <div class="layer-tit">
+                    <h4>비밀번호 입력</h4>
+                </div>
+                <div class="layer-insert">
+                    <input type="hidden" id="id">
+                    <input type="password" id="password" placeholder="등록한 비밀번호를 입력해주세요.">
+                </div>
+                <div class="button__box">
+                    <button class="button button__Basic button__Navy w50" id="btn-confirm">확인</button>
+                    <button class="button button__Basic button__White w50" id="btn_cancel">취소</button>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+</div>
+<script>
+
+    $(document).ready(function () {
+        $('.new_ico').each(function () {
+            var input = $(this).find('input');
+            var dateString = input.val();
+            var date = new Date(dateString);
+            var currentDateMinus14 = new Date();
+            currentDateMinus14.setDate(currentDateMinus14.getDate() - 14);
+            if (date < currentDateMinus14) {
+                $(this).css('display', 'none');
+            }
+        });
+        $(".close_btn").click(function () {
+            $(".layer-bg").hide();
+        });
+
+        $("#btn_cancel").click(function () {
+            $(".layer-bg").hide();
+        });
+
+
+        $("#btn-write-manager").click(function () {
+            window.location.href = "/board/write-manager";
+        });
+        $("#btn-write").click(function () {
+            window.location.href = "/board/write-user";
+        });
+        var selectedSearchOpt = "";
+        selectedSearchOpt = $("#searchOpt").val();
+        $("#searchOpt").val(selectedSearchOpt);
+
+        // 검색 옵션 변경 시 변수에 선택한 값을 저장합니다.
+        $("#searchOpt").change(function () {
+            selectedSearchOpt = $(this).val();
+        });
+
+        $("#btn-confirm").click(function () {
+            var id = $("#id").val();
+            var password = $("#password").val(); // 비밀번호 입력란의 값 가져오기
+
+            // POST 요청을 보낼 데이터 객체 생성
+            var requestData = JSON.stringify({
+                password: password
+            });
+
+            $.ajax({
+                url: "/board/user/password/" + id,
+                type: "POST",
+                dataType: "json",
+                contentType: 'application/json',
+                data: requestData,
+                success: function (result) {
+                    if (result.status == 'SUCCESS') {
+                        window.location.href = "/board/user/" + id + "?pw=" + password; // 이동할 페이지 URL로 변경
+                        $("#pw_layer").hide();
+                    } else {
+                        alert(result.message);
+                        $("#password").val("");
+                        $("#password").focus();
+                        return;
+                    }
+                },
+                error: function (e) {
+                    console.error(e);
+                },
+            });
+        });
+
+        $('#searchInput').keyup(function (e) {
+            if (e.keyCode == 13) { // 엔터 키를 눌렀을 때
+                window.location.href = "/board/index-mob?" + $('#searchOpt').val() + "=" + $('#searchInput').val();
+            }
+        });
+
+        $('#btn-search').click(function () {
+            window.location.href = "/board/index-mob?" + $('#searchOpt').val() + "=" + $('#searchInput').val();
+        });
+
+    });
+
+    function password_confirm(id, titleType) {
+        if (document.getElementById('auth').value == '[ADMIN]' || titleType != null) {
+            detail_page(id);
+        } else {
+            $("#id").val(id);
+            $("#password").val("");
+            $("#pw_layer").show();
+        }
+    }
+
+    function detail_page(id) {
+        window.location.href = "/board/user/" + id
+    }
+
+
+</script>
+</body>
+</html>

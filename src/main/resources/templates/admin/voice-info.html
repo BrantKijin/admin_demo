@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/default-layout}">
+
+<head>
+    <title>XP보이스-주요기능</title>
+</head>
+<body layout:fragment="content">
+
+<div id="warpper" class="adminVer">
+    <input type="hidden" id="searchVal" name="searchVal"/>
+    <div class="cont">
+        <div class="admin_sec">
+            <div class="admin-tit">
+                <h4>상담신청 현황</h4>
+                <div class="button__box mgLAuto">
+                    <button id="newBtn" name="newBtn" type="button" class="button__Big button__darkNavy button w80p">
+                        신규
+                    </button>
+                    <button id="searchBtn" name="searchBtn" type="button" class="button__Big button__Navy button w80p">
+                        조회
+                    </button>
+                    <button type="button" class="button__Big button__Green button w120p" id="excelSave" name="excelSave"
+                            onclick="fn_excelSave()">
+                        엑셀저장
+                    </button>
+                    <div class="admin-search">
+                        <input type="search" class="admin-search__input" id="searchInput" name="searchInput"
+                               title="검색입력" placeholder="단지명 혹은 단지코드를 입력해주세요.">
+                        <button class="admin-search__btn" type="submit" title="검색">검색</button>
+                    </div>
+                </div>
+            </div>
+            <div class="admin-table mb20 w100">
+                <table class="admin-table_list" id="data-table">
+                    <colgroup>
+                        <col width="112">
+                        <col width="*">
+                        <col width="80">
+                        <col width="72">
+                        <col width="120">
+                        <col width="142">
+                        <col width="240">
+                        <col width="88">
+                        <col width="88">
+                    </colgroup>
+                    <tbody>
+                    <tr>
+                        <td class="t_head">
+                            신청일
+                        </td>
+                        <td class="t_head">
+                            단지명(건물명)
+                        </td>
+                        <td class="t_head">
+                            설치업체
+                        </td>
+                        <td class="t_head">
+                            단지코드
+                        </td>
+                        <td class="t_head">
+                            연락처
+                        </td>
+                        <td class="t_head">
+                            신청사항
+                        </td>
+                        <td class="t_head">
+                            방송장비(정보)
+                        </td>
+                        <td class="t_head">
+                            계약상태
+                        </td>
+                        <td class="t_head">
+                            상담자(확인자)
+                        </td>
+                    </tr>
+                    <tr th:each="dto : ${result.dtoList}" th:onclick="detail_page([[${dto.id}]])"
+                        style="cursor: pointer" title="상세페이지"
+                        th:class="${dto.requestStatus.toString().contains('아파트아이_영업전') ? 'apti_row' :
+                            (dto.requestStatus.toString().contains('XP보이스_신규계약') || 
+                            dto.requestStatus.toString().contains('XP보이스_상담진행') ||
+                            dto.requestStatus.toString().contains('XP보이스_현장답사')) && (dto.consultant == '' || dto.consultant == null)  ? 'new_row' : ''}">
+                        <td id="applyDate" name="applyDate">
+                            <span>[[${dto.applyDate}]]</span>
+                        </td>
+                        <td class="t_left">
+                            <span>[[${dto.aptName}]]</span>
+                        </td>
+                        <td>
+                            <span>[[${dto.installCompany}]]</span>
+                        </td>
+                        <td>
+                            <span>[[${dto.aptCd}]]</span>
+                        </td>
+                        <td>
+                            <span>[[${dto.contact}]]</span>
+                        </td>
+                        <td>
+                            <span>[[${dto.requestStatus}]]</span>
+                        </td>
+                        <td class="t_left">
+                            <span>[[${dto.broadcastEquipment}]]</span>
+                        </td>
+                        <td>
+                            <span>[[${dto.contractStatus}]]</span>
+                        </td>
+                        <td>
+                            <span>[[${dto.consultant}]]</span>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="page-box">
+                <div class="page-box_list">
+                    <div class="prev_btn" th:if="${result.prev}">
+                        <a th:href="@{/admin/voice-info(page= ${result.start -1},
+                                type=${pageRequestDTO.type} ,
+                                keyword = ${pageRequestDTO.keyword},
+                                aptCd = ${param.aptCd},
+                                aptName = ${param.aptName}) }" tabindex="-1">
+                            <span class="caption">이전</span>
+                        </a>
+                    </div>
+
+                    <div class="page_num">
+                        <div th:each="page: ${result.pageList}">
+                            <a th:class=" 'page-item ' + ${result.page == page?'active':''} " th:href="@{/admin/voice-info(page = ${page} ,
+                            type=${pageRequestDTO.type} ,
+                            keyword = ${pageRequestDTO.keyword},
+                            aptCd = ${param.aptCd},
+                            aptName = ${param.aptName}  )}">[[${page}]]</a>
+                        </div>
+                    </div>
+                    <div class="next_btn" th:if="${result.next}">
+                        <a th:href="@{/admin/voice-info(page= ${result.end + 1},
+                                type=${pageRequestDTO.type} ,
+                                keyword = ${pageRequestDTO.keyword},
+                                aptCd = ${param.aptCd},
+                                aptName = ${param.aptName} ) }"><span class="caption">다음</span></a>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+    </div>
+</div>
+
+<script>
+
+    $(document).ready(function () {
+        $(".voiceinfo-tab").addClass("active");
+        $(".admin-tab").addClass("active");
+        $("#admin_sub").css('display', 'flex');
+        $(window).scroll(function () {
+            $(".slideanim").each(function () {
+                var pos = $(this).offset().top;
+                var winTop = $(window).scrollTop();
+                if (pos < winTop + 1000) {
+                    $(this).addClass("slide");
+                    $('.header').addClass("fixed");
+                } else if (winTop == 0) {
+                    $(this).removeClass("slide");
+                    $('.header').removeClass("fixed");
+                }
+                $(".main_txt").click(function () {
+
+                });
+            });
+
+        });
+
+        $('#searchBtn').click(function () {
+            location.href = "/admin/voice-info";
+        })
+        $("#newBtn").click(function () {
+            // 원하는 URL로 이동
+            window.open('/admin/voice-info-detail-new', '_blank');
+        });
+        $('#searchInput').keyup(function (e) {
+
+            if (e.keyCode == 13) {
+                location.href = "/admin/voice-info?aptCd=" + $('#searchInput').val() + "&aptName=" + $('#searchInput').val()
+                    + "&installCompany=" + $('#searchInput').val()
+                ;
+            }
+        })
+    });
+
+    function detail_page(id) {
+        window.open('/admin/voice-info-detail/' + id, '_blank');
+    }
+
+    function fn_excelSave() {
+        location.href = "/admin/voice-info/excel-down?aptCd=" + $('#searchInput').val() + "&aptName=" + $('#searchInput').val()
+            + "&installCompany=" + $('#searchInput').val();
+        ;
+    }
+</script>
+</body>
+
+
+</html>

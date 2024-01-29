@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{layout/default-layout}">
+
+<head>
+    <title>XP보이스-배너관리</title>
+</head>
+
+<body layout:fragment="content">
+
+<div id="warpper" class="adminVer">
+	<div class="cont">
+        <div class="admin_sec">
+            <div class="admin-tit">
+                <h4>음성샘플관리</h4>
+                <div class="button__box mgLAuto">
+                    <button type="button" class="button__Big button__Navy button w120p" id="audio_add">  
+                        샘플 추가
+                    </button>
+                </div>
+            </div>
+            <div class="admin-table mb20 w100">
+                <table class="admin-table_list">
+                    <colgroup>
+                        <col width="60">
+                        <col width="160">
+                        <col width="*">
+                        <col width="*">
+                        <col width="120">
+                    </colgroup>
+                    <tbody>
+                        <tr>
+                            <td class="t_head">
+                                번호
+                            </td>
+                            <td class="t_head">
+                                음성명
+                            </td>
+                            <td class="t_head">
+                                이미지파일
+                            </td>
+                            <td class="t_head">
+                                음성파일
+                            </td>
+                            <td class="t_head">
+                                등록날자
+                            </td>
+                        </tr>
+                        <tr th:each="dto : ${result.dtoList}" th:onclick="detail_page([[${dto.id}]])" style="cursor: pointer" title="상세페이지">
+                            <td>
+                                [[${dto.id}]]
+                            </td>
+                            <td class="t_left">
+                                [[${dto.soundTitle}]]
+                            </td>
+                            <td class="t_left">
+                                [[${dto.imageFileName}]]
+                            </td>
+                            <td class="t_left">
+                                [[${dto.mp3FileName}]]
+                            </td>
+                            <td>
+                                [[${dto.createAt}]]
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="page-box">
+                <div class="page-box_list">
+                    <div class="prev_btn" th:if="${result.prev}">
+                        <a th:href="@{/admin/sound-track(page= ${result.start -1},
+                                                                type=${pageRequestDTO.type} ,
+                                                                keyword = ${pageRequestDTO.keyword} ) }" tabindex="-1">
+                            <span class="caption">이전</span>
+                        </a>
+                    </div>
+            
+                    <div class="page_num">
+                        <div th:each="page: ${result.pageList}">
+                            <a th:class=" 'page-item ' + ${result.page == page?'active':''} " th:href="@{/admin/sound-track(page = ${page} ,
+                                                            type=${pageRequestDTO.type} ,
+                                                            keyword = ${pageRequestDTO.keyword}  )}">[[${page}]]</a>
+                        </div>
+                    </div>
+                    <div class="next_btn" th:if="${result.next}">
+                        <a th:href="@{/admin/sound-track(page= ${result.end + 1},
+                                                                type=${pageRequestDTO.type} ,
+                                                                keyword = ${pageRequestDTO.keyword} ) }"><span
+                                class="caption">다음</span></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+</div>
+    <div class="layer-bg" style="display: none;">
+        <input type="hidden" id="id">
+        <input type="hidden" id="mod">
+        <div class="layer-cont audioType">
+            <button type="button" class="close_btn" style="cursor: pointer">
+                닫기
+            </button>
+            <div class="layer-tit">
+                <h4>음성샘플 정보</h4>
+            </div>
+            <div class="layer-insert">
+                <table class="pop-table">
+                    <tbody>
+                        <tr>
+                            <td class="t_head">샘플명</td>
+                            <td>
+                                <input type="text" name="soundTitle" id="soundTitle" placeholder="음성이름을 입력해주세요" maxlength="20">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="t_head">샘플 이미지</td>
+                            <td>
+                                <div class="filebox">
+                                    <input type="text" class="upload-name" id="img-upload-name" placeholder="파일을 첨부해주세요." readonly  accept=".png,.jpg">
+                                    <input type="hidden" id="imgFileId" >
+                                    <label for="imgfile">파일찾기</label>
+                                    <input type="file" id="imgfile">
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="t_head">샘플 파일</td>
+                            <td>
+                                <div class="filebox">
+                                    <input type="text" class="upload-name" id="mp3-upload-name" placeholder="파일을 첨부해주세요."  readonly  accept=".mp3,.wav,.wma">
+                                    <input type="hidden" id="mp3FileId">
+                                    <label for="mp3file">파일찾기</label>
+                                    <input type="file" id="mp3file">
+                                </div>
+                            </td>
+                        </tr>
+    
+                    </tbody>
+                </table>
+            </div>
+    
+            <div class="button__box">
+                <button class="button button__Big button__Navy w50" id="saveBtn">저장</button>
+                <button class="button button__Big button__White w50" id="delBtn">삭제</button>
+                <button class="button button__Big button__White w50" id="closeBtn">닫기</button>
+            </div>
+        </div>
+    </div>
+
+<script>
+    
+    $(document).ready(function () {
+        $(".adsoundtrack-tab").addClass("active");
+        $(".admin-tab").addClass("active");
+        $("#admin_sub").css('display', 'flex');
+        $("#audio_add").click(function () {
+            if('[[${result.totalElement}]]' >= 20){
+                alert("샘플이 최대갯수로 등록되어있습니다.\n추가등록 하시려면 기존 샘플을 제거후 등록해주세요.");
+                return;
+            }
+            $("#id").val(""); // id 입력 필드 초기화
+            $("#soundTitle").val(""); // 샘플명 입력 필드 초기화
+            $("#img-upload-name").val(""); // 샘플 이미지 입력 필드 초기화
+            $("#mp3-upload-name").val(""); // 샘플 파일 입력 필드 초기화
+            $("#mod").val("NEW");
+            $(".layer-bg").show();
+            if($("#mod").val()=="NEW"){
+                $('#delBtn').hide();
+                $('#closeBtn').show();
+            }
+
+        });
+
+        $(".close_btn").click(function () {
+            $(".layer-bg").hide();
+        });
+        $("#closeBtn").click(function () {
+            $(".layer-bg").hide();
+        });
+
+
+        $("#saveBtn").on("click", function () {
+            var soundTitle = $("#soundTitle").val();
+            var imgFileName = $("#img-upload-name").val();
+            var mp3FileName = $("#mp3-upload-name").val();
+            var id = $('#id').val();
+            if (soundTitle.trim() === "") {
+                alert("샘플명을 입력해주세요.");
+                return;
+            }
+
+            if (imgFileName.trim() === "") {
+                alert("샘플 이미지를 첨부해주세요.");
+                return;
+            }
+
+            if (mp3FileName.trim() === "") {
+                alert("샘플 파일을 첨부해주세요.");
+                return;
+            }
+
+            // 이미지 파일 확장자 검사
+            var imgFileExt = imgFileName.split('.').pop().toLowerCase();
+            if (['jpg', 'jpeg', 'png'].indexOf(imgFileExt) === -1) {
+                alert("이미지 파일 확장자는 jpg, jpeg, png만 허용됩니다.");
+                return;
+            }
+
+            // MP3 파일 확장자 검사
+            var mp3FileExt = mp3FileName.split('.').pop().toLowerCase();
+            if (mp3FileExt !== 'mp3') {
+                alert("MP3 파일 확장자는 mp3만 허용됩니다.");
+                return;
+            }
+
+            var currentRow = $('.pop-table');
+            var rowData = {};
+            $('.pop-table input,.pop-table select,.pop-table textarea').each(function () {
+                var name = $(this).attr('name'); // input 요소의 name 속성
+                var value = $(this).val(); // input 요소의 value 속성
+                if (name) {
+                    rowData[name] = value;
+                }
+            });
+            var url = '/admin/sound-track';
+            
+            if(id != ''){
+                url = '/admin/sound-track/'+id;
+            }
+            var jsonData = JSON.stringify(rowData);
+            $.ajax({
+                url: url,
+                type: "POST",
+                dataType: "json",
+                data: jsonData,
+                contentType: "application/json; charset=UTF-8",
+                success: function (result) {
+                    if (result.status == 'SUCCESS') {
+                        if (id == '') {
+                            id = result.data;
+                        }
+                        file_upload(id);
+                        $(".layer-bg").hide();
+                        location.reload();
+                    } else {
+                        alert(result.message);
+                    }
+                    
+                },
+                error: function (e) {
+                    console.error(e);
+                    alert("저장실패하였습니다. 관리자에게 문의바랍니다.");
+                    $(".layer-bg").hide();
+                    location.reload();
+                }
+            });
+        });
+
+    });
+
+    $("#delBtn").on("click", function () {
+        if(confirm("삭제하시겠습니까?")){
+            var id = $('#id').val();
+            $.ajax({
+                url: "/admin/sound-track/" + id,
+                type: "DELETE",
+                success: function (result) {
+                    if (result.status == 'SUCCESS') {
+                        alert("삭제되었습니다.");
+                        $(".layer-bg").hide();
+                        location.reload();
+                    } else {
+                        alert(result.message);
+                    }
+                },
+                error: function (e) {
+                    console.error("음원샘플제거 에러", e);
+                    alert("음원샘플제거 중 에러가 발생하였습니다. 관리자에게 문의하세요.");
+                    $(".layer-bg").hide();
+                    location.reload();
+                },
+            });
+        }
+    });
+
+    $("#imgfile").on('change', function () {
+        var fileName = $("#imgfile").val();
+        $("#img-upload-name").val(fileName);
+    });
+    $("#mp3file").on('change', function () {
+        var fileName = $("#mp3file").val();
+        $("#mp3-upload-name").val(fileName);
+    });
+    
+    function file_upload(id) {
+            var mod = $('#mod').val();
+            var imgFileInput = document.getElementById("imgfile");
+            var imgFiles = imgFileInput.files;
+            var mp3FileInput = document.getElementById("mp3file");
+            var mp3Files = mp3FileInput.files;
+
+            var uploadImage = mod === "NEW" || (mod === "UPDATE" && imgFiles.length > 0);
+            var uploadMusic = mod === "NEW" || (mod === "UPDATE" && mp3Files.length > 0);
+            if (uploadImage) {
+                uploadFile(imgFiles[0], "SOUNDTRACK_IMAGE", id);
+                    if (uploadMusic) {
+                        uploadFile(mp3Files[0], "SOUNDTRACK_MUSIC", id);
+                            if (mod === "UPDATE") {
+                                removePreviousFiles($('#imgFileId').val());
+                                removePreviousFiles($('#mp3FileId').val());
+                            }
+                    } else if (mod === "UPDATE") {
+                        removePreviousFiles($('#imgFileId').val());
+                    }
+            } else if (uploadMusic) {
+                uploadFile(mp3Files[0], "SOUNDTRACK_MUSIC", id);
+                    if (mod === "UPDATE") {
+                        removePreviousFiles($('#mp3FileId').val());
+                    }
+            } 
+        }
+
+        function uploadFile(file, fileType, id) {
+            
+            var formData = new FormData();
+            formData.append("uploadFiles", file);
+            formData.append("type", fileType);
+            formData.append("parentId", id);
+
+            $.ajax({
+                url: "/file/upload",
+                type: "POST",
+                dataType: "json",
+                async:false,
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (result) {
+                },
+                error: function (e) {
+                    console.error(fileType + " 업로드 에러", e);
+                    alert(fileType + " 업로드 중 에러가 발생하였습니다. 관리자에게 문의하세요.");
+                },
+            });
+        }
+
+        function removePreviousFiles(id) {
+            $.ajax({
+                url: "/file/remove/" + id,
+                type: "DELETE",
+                success: function (result) {
+                },
+                error: function (e) {
+                    console.error("기존 파일 제거 에러", e);
+                    alert("기존 파일 제거 중 에러가 발생하였습니다. 관리자에게 문의하세요.");
+                },
+            });
+        }
+        
+        
+        function detail_page(id) {
+            $("#mod").val("UPDATE");
+            if ($("#mod").val() == "UPDATE") {
+                $('#delBtn').show();
+                $('#closeBtn').hide();
+            }
+            $.ajax({
+                url: "/admin/sound-track/" + id, // 서버에서 데이터 가져오는 엔드포인트 URL
+                type: "GET",
+                dataType: "json",
+                success: function (result) {
+                    $("#id").val(result.data.id);
+                    $("#soundTitle").val(result.data.soundTitle);
+                    
+                    $("#img-upload-name").val(result.data.imageFileName.fileName);
+                    $("#imgFileId").val(result.data.imageFileName.fileId);
+                    $("#mp3-upload-name").val(result.data.mp3FileName.fileName);
+                    $("#mp3FileId").val(result.data.mp3FileName.fileId);
+
+                },
+                error: function (e) {
+                    console.error("데이터 가져오기 실패", e);
+                    alert("데이터를 가져오는 중 오류가 발생했습니다. 관리자에게 문의하세요.");
+                },
+            });
+
+            $(".layer-bg").show();
+        }
+
+</script>
+</body>
+</html>

@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lagn="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    xmlns="http://www.w3.org/1999/html" layout:decorate="~{layout/default-layout}">
+
+<head>
+    <title>공지사항&게시판</title>
+
+<body layout:fragment="content">
+
+<div id="warpper">
+    <div class="sub-box bg04">
+        <div class="sub-box mask">
+            <div class="sub-box_tit">
+                <h3>
+                    커뮤니티
+                </h3>
+                <span>공지사항 및 다양한 방송자료들이 있습니다.</span>
+            </div>
+        </div>
+    </div>
+	<div class="cont">
+        <div class="board_sec">
+            <div class="boardView-box">
+                <div class="boardView-box_tit">
+                    <h4 th:text="${result.title}"></h4>
+                    <input type="hidden" id="writerPassword" name="writerPassword">
+                    <p>
+                        <span th:text="${result.writer}"></span>
+                        <span class="v_line"><span class="caption">라인</span></span>
+                        <span th:text="${result.contact}"></span>
+                        <span class="v_line"><span class="caption">라인</span></span>
+                        <span th:text="${result.createdAt}"></span>
+                    </p>
+                </div>
+                <div class="boardView-box_info" >
+                    <div class="board-fileupload" th:if="${result.boardFileInfoFullPathResponses.size() > 0}">
+                        <h4 class="t_left">첨부파일</h4>
+                        <ul class="file_list">
+                            <li th:each="fileInfo : ${result.boardFileInfoFullPathResponses}">
+                                <a th:href="${fileInfo.fullPath}" target="_blank" th:text="${fileInfo.fileName}"></a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="post-view">
+                        <p th:utext="${result.content}">
+                        </p>
+                    </div>
+                    <div class="qa-box" th:if="${result.titleType == null}">
+                        <div class="qa-box_view">
+                            <h4>문의답변</h4>
+                            <p th:text="${result.comment}"></p>
+                        </div>
+                    </div>
+                    <div class="qa-box" id="qa-box" style="display:none">
+                        <div class="qa-box_input">
+                            <h4>문의답변</h4>
+                            <textarea id="content" name="content" maxlength="500"></textarea>
+                            <div class="button__box mgT12">
+                                <button type="button" class="button__Basic button__Navy button w100p" id="btn-qa-confirm" th:onclick="fn_qa_confirm([[${result.id}]]);">  
+                                    작성완료
+                                </button>
+                            </div>
+                        </textarea>
+                    </div>
+                </div>
+            </div>
+
+            <div class="button__box mgT28 pdL20 pdR20">
+                <button type="button" class="button__Big button__White button w160p" id="btn-qna" sec:authorize="hasAuthority('ADMIN')" th:if="${result.titleType == null}">  
+                    문의답변
+                </button>
+                <button type="button" class="button__Big button__Navy button w100p" id="btn_update_manager" th:onclick="fn_update([[${result.id}]]);" sec:authorize="hasAuthority('ADMIN')" th:if="${result.titleType != null}">  
+                    공지 수정
+                </button>
+                <button type="button" class="button__Big button__Navy button w80p" id="btn_update"
+                    th:onclick="fn_update_user([[${result.id}]]);" th:if="${result.titleType == null}" sec:authorize="hasAuthority('ROLE_ANONYMOUS')">
+                    수정
+                </button>
+                <button type="button" class="button__Big button__darkNavy button w80p" id="btn_delete" th:onclick="if(confirm('삭제하시겠습니까?'))fn_delete([[${result.id}]]);"  th:if="${result.titleType == null}">    
+                    삭제
+                </button>
+                <button type="button" class="button__Big button__darkNavy button w100p" id="btn_delete"
+                    th:onclick="if(confirm('삭제하시겠습니까?'))fn_delete([[${result.id}]]);" sec:authorize="hasAuthority('ADMIN')" th:if="${result.titleType != null}">
+                    공지 삭제
+                </button>
+                </button><button type="button" class="button__Big button__darkNavy button w80p" onclick="window.location.href = currentOS != 'web' ? '/board/index-mob' : '/board/index';">
+                    목록
+                </button>
+            </div>
+        </div>
+        </div>
+    </div>
+    </div>
+    <div class="layer-bg" style="display:none" id="confirm_layer" name="confirm_layer">
+        <div class="layer-cont">
+            <button type="button" class="close_btn" name="close_btn" style="cursor: pointer">
+                닫기
+            </button>
+            <div class="layer-tit">
+                <h4>첨부파일 확인</h4>
+            </div>
+    
+            <div class="file_view" id="eq_view" name="eq_view">
+            </div>
+    
+            <div class="button__box">
+                <button class="button button__Basic button__White w100" name="close_btn">닫기</button>
+            </div>
+        </div>
+    </div>
+    <script>
+    var pw="";
+    $(document).ready(function () {
+        $("#btn-qna").click(function () {
+            $("#qa-box").css('display','block');
+        })
+        var url = new URL(window.location.href);
+        var params = new URLSearchParams(url.search);
+        // 파라미터 값 가져오기
+        pw = params.get("pw");
+        $('#writerPassword').val(pw);
+    });
+
+    function fn_update(id){
+        window.location.href = "/board/write-manager?type=UPDATE&id="+id;
+    }
+
+    function fn_update_user(id) {
+        window.location.href = "/board/write-user?type=UPDATE&pw="+pw+"&id="+id;
+    }
+    function fn_delete(id) {
+        var password = $('#writerPassword').val()
+        var requestData = JSON.stringify({
+            writerPassword: password
+        });
+        $.ajax({
+            url: "/board/user/" + id,
+            type: "DELETE",
+            data: requestData,
+            dataType: "json",
+            contentType: 'application/json',
+            success: function (result) {
+                if (result.status == 'SUCCESS') {
+                    alert("삭제하였습니다.");
+                    if (currentOS != 'web') {
+                        window.location.href = "/board/index-mob";
+                    } else {
+                        window.location.href = "/board/index";
+                    }
+                } else {
+                    alert(result.message);
+                }
+            },
+            error: function (e) {
+                console.error("기존 파일 제거 에러", e);
+                alert("삭제실패하였습니다. 관리자에게 문의하세요.")
+            },
+        });
+    }
+
+    function fn_delete_manager(id) {
+            $.ajax({
+            url: "/board/manager/" + id,
+            type: "DELETE",
+            success: function (result) {
+                if (result.status == 'SUCCESS') {
+                    alert("삭제하였습니다.");
+                    if (previousUrl && previousUrl.includes("-mob")) {
+                        window.location.href = "/board/index-mob";
+                    } else {
+                        window.location.href = "/board/index";
+                    }
+                } else {
+                    alert(result.message);
+                }
+            },
+            error: function (e) {
+                console.error("기존 파일 제거 에러", e);
+                alert("삭제실패하였습니다. 관리자에게 문의하세요.")
+            },
+        });
+    }
+
+
+    function fn_qa_confirm(id) {
+        var content = $("#content").val(); // 비밀번호 입력란의 값 가져오기
+        // POST 요청을 보낼 데이터 객체 생성
+        var requestData = JSON.stringify({
+            content: content
+        });
+        $.ajax({
+            url: "/board/manager/" + id + "/comment",
+            type: "POST",
+            dataType: "json",
+            contentType: 'application/json',
+            data: requestData,
+            success: function (result) {
+                if (result.status == 'SUCCESS') {
+                    alert("답변이 등록되었습니다.");
+                    window.location.reload();
+                }else{
+                    alert(result.message);
+                }
+            },
+            error: function (e) {
+                alert("등록 실패하였습니다. 관리자에게 문의하세요.")
+            },
+        });
+        }
+        function goListPage(){
+            if (currentOS != 'web') {
+                window.location.href = "/board/index-mob";
+            } else {
+                window.location.href = "/board/index";
+            }
+        }
+    </script>
+</body>
+</html>

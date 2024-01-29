@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lagn="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    xmlns="http://www.w3.org/1999/html" layout:decorate="~{layout/default-layout}">
+
+<head>
+<title>XP보이스</title>
+
+<body layout:fragment="content">
+<div class="layer-bg" style="display: none;">
+    <div class="layer-cont w400p">
+        <button type="button" class="close_btn" onclick="closeAudioPopup()" style="cursor: pointer">
+            닫기
+        </button>
+        <div class="layer-tit">
+            <h4 id="mp3_Title"></h4>
+        </div>
+        <audio controls class="w100 mgT12" id="audioPlayer">
+            <source src="" type="audio/mpeg">
+        </audio>
+
+        <div class="button__box">
+            <button class="button button__Big button__White  w100"  onclick="closeAudioPopup()">닫기</button>
+        </div>
+    </div>
+</div>
+<div id="warpper">
+    <div class="sub-box bg01">
+        <div class="sub-box mask">
+            <div class="sub-box_tit">
+                <h3>
+                    음성샘플
+                </h3>
+                <span>단지에서 원하는 음성으로 안내방송을 사용해 보세요</span>
+            </div>
+        </div>
+    </div>
+	<div class="cont">
+        <section class="cont_bgType white">
+            <div class="audio-box">
+                <ul class="audio-list">
+                    <li th:each="dto : ${result.dtoList}">
+                        <div class="audio-list_thum"  th:onclick="openAudioPopup([[${dto.mp3FileName.fullPath}]],[[${dto.soundTitle}]])" >
+                            <img alt="음성샘플_섬네일1" th:src="${dto.imageFileName.fullPath}"/>
+                        </div>
+                        <span>
+                            [[${dto.soundTitle}]]
+                        </span>
+                    </li>
+                </ul>
+                <div class="page-box">
+                    <div class="page-box_list">
+                        <div class="prev_btn" th:if="${result.prev}">
+                            <a th:href="@{/data/sound-track(page= ${result.start -1},
+                                                                    type=${pageRequestDTO.type} ,
+                                                                    keyword = ${pageRequestDTO.keyword} ) }" tabindex="-1">
+                                <span class="caption">이전</span>
+                            </a>
+                        </div>
+                
+                        <div class="page_num">
+                            <div th:each="page: ${result.pageList}">
+                                <a th:class=" 'page-item ' + ${result.page == page?'active':''} " th:href="@{/data/sound-track(page = ${page} ,
+                                                                type=${pageRequestDTO.type} ,
+                                                                keyword = ${pageRequestDTO.keyword}  )}">[[${page}]]</a>
+                            </div>
+                        </div>
+                        <div class="next_btn" th:if="${result.next}">
+                            <a th:href="@{/data/sound-track(page= ${result.end + 1},
+                                                                    type=${pageRequestDTO.type} ,
+                                                                    keyword = ${pageRequestDTO.keyword} ) }"><span
+                                    class="caption">다음</span></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        
+    </div>
+</div>
+<script>
+
+    $(document).ready(function () {
+        $(".soundtrack-tab").addClass("active");
+        $(window).scroll(function () {
+            $(".slideanim").each(function () {
+                var pos = $(this).offset().top;
+
+                var winTop = $(window).scrollTop();
+                if (pos < winTop + 1000) {
+                    $(this).addClass("slide");
+                    $('.header').addClass("fixed");
+                } else if (winTop == 0) {
+                    $(this).removeClass("slide");
+                    $('.header').removeClass("fixed");
+                }
+                $(".main_txt").click(function () {
+
+                });
+            });
+
+        });
+
+    });
+
+    // 이미지 클릭 시 레이어 팝업 열고 오디오 재생
+    function openAudioPopup(audioSrc,title) {
+        document.getElementById('mp3_Title').innerText=title+" 음성 샘플";
+        var audioElement = document.getElementById('audioPlayer'); // 오디오 엘리먼트 선택
+        audioElement.src = audioSrc; // 오디오 소스 설정
+        audioElement.load(); // 오디오 다시 로드
+        audioElement.play(); // 오디오 재생
+        $(".layer-bg").show(); // 레이어 팝업 열기
+    }
+
+    // 레이어 팝업 닫기 및 오디오 정지
+    function closeAudioPopup() {
+        var audioElement = document.getElementById('audioPlayer'); // 오디오 엘리먼트 선택
+        audioElement.pause(); // 오디오 일시 정지
+        $(".layer-bg").hide(); // 레이어 팝업 닫기
+    }
+
+</script>
+</body>
+</html>

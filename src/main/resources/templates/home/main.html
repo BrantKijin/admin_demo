@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/default-layout}">
+<head>
+    <title>XP보이스</title>
+</head>
+<body layout:fragment="content">
+<div id="warpper">
+    <div sec:authorize="isAnonymous()" class="ad_fixed_btn">
+        <a th:href="@{/main/voice-request}">
+            <img alt="상담신청 아이콘" src="/images/write_ico.svg"/>
+            상담신청
+        </a>
+    </div>
+    <div class="main_cont">
+        <section class="main_section type01">
+            <div class="main-view scroll_view">
+                <div class="main-view_txt left_slide">
+                    <p>
+                        <span class="text_show" data-text="전문가도 인정한 편리하고">
+                            전문가도 인정한 편리하고</span>
+                        <span class="text_show" data-text="만족도 높은 아파트 안내방송의 시작">
+                            만족도 높은 아파트 안내방송의 시작</span>
+                    </p>
+
+                    <h1>
+                        <b class="text_show2" data-text="‘XP보이스’">‘XP보이스’</b>
+                    </h1>
+                </div>
+                <div class="main_ca right_slide">
+                    <img src="/images/main_char.png"/>
+                </div>
+            </div>
+        </section>
+        <div class="banner-area">
+            <div class="slider">
+            </div>
+        </div>
+        <section class="main_section type02">
+            <div class="cont_sec main-service slideanim">
+                <div class="main_section__info">
+                    <h2>XP보이스란?</h2>
+                    <p>
+                        PC를 통해 입력한 텍스트를 깨끗하고 선명한 음성으로 변환하여<br/>
+                        고객(입주민)들에게 안내방송을 해주는 서비스입니다.
+                    </p>
+                </div>
+                <ul class="main-service__list">
+                    <li>
+                        <img alt="서비스1" src="/images/service_icon_01.svg"/>
+                        <p>
+                            전달력 높은<br/>음성방송
+                        </p>
+                    </li>
+                    <li>
+                        <img alt="서비스2" src="/images/service_icon_02.svg"/>
+                        <p>
+                            청취자(고객)의 방송에<br/>
+                            대한 만족도 상승
+                        </p>
+                    </li>
+                    <li>
+                        <img alt="서비스3" src="/images/service_icon_03.svg"/>
+                        <p>
+                            방송이력관리로<br/>
+                            체계적인 방송원고 관리
+                        </p>
+                    </li>
+                    <li>
+                        <img alt="서비스4" src="/images/service_icon_04.svg"/>
+                        <p>
+                            관리사무소 직원들의<br/>
+                            업무 편리함 제공
+                        </p>
+                    </li>
+                    <li>
+                        <img alt="서비스5" src="/images/service_icon_05.svg"/>
+                        <p>
+                            공용시설 음악방송을<br/>
+                            통한 입주민들의 생활수준 UP
+                        </p>
+                    </li>
+                    <li>
+                        <img alt="서비스6" src="/images/service_icon_06.svg"/>
+                        <p>
+                            음성 방송과 동시에<br/>
+                            방송 내용을 문자로 전달
+                        </p>
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="main_section type03">
+            <div class="cont_sec main-service slideanim">
+                <div class="main_section__info">
+                    <h2>XP보이스는 이렇게</h2>
+                    <p>
+                        XP보이스가 제안하는 컴퓨터 안내방송을 알아보세요.
+                    </p>
+                </div>
+                <div class="main_section__btn">
+                    <a href="https://prod-xpvoice-s3.s3.ap-northeast-2.amazonaws.com/COMMON/Xp%EB%B3%B4%EC%9D%B4%EC%8A%A4_%EC%86%8C%EA%B0%9C%EC%84%9C_v3.pdf" target="_blank" download>
+                        <button type="button" class="button__Big button__darkNavy button">
+                            XP보이스 제안서 다운로드
+                        </button>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <section class="main_section type04">
+            <div class="cont_sec main-cs slideanim">
+                <div class="main-cs__tit">
+                    <h2>고객상담정보</h2>
+                    <span>
+                        노후화 방송장비 설치 가능여부도 전문 설치팀에서 확인해 드립니다.
+                    </span>
+                </div>
+                <ul class="main-cs__list">
+                    <li>
+                        <img alt="고객센터_아이콘" src="/images/cs_ico.svg"/>
+                        <p>
+                            <b class="cs-tit">고객센터</b>
+                            <span>1566-5643</span>
+                        </p>
+                    </li>
+                    <li>
+                        <img alt="운영시간" src="/images/time_ico.svg"/>
+                        <p>
+                            <b class="cs-tit">운영시간</b>
+                            <span>평일  <b>09:00 ~ 18:00</b></span>
+                        </p>
+                    </li>
+                    <li>
+                        <img alt="직통전화" src="/images/cell_ico.svg"/>
+                        <p>
+                            <b class="cs-tit">직통전화</b>
+                            <span>02-6281-7398, 7229</span>
+                        </p>
+                    </li>
+                    <li>
+                        <img alt="FAX" src="/images/fax_ico.svg"/>
+                        <p>
+                            <b class="cs-tit">FAX</b>
+                            <span>02-6281-7170</span>
+                        </p>
+                    </li>
+                </ul>
+            </div>
+        </section>
+    </div>
+</div>
+<div class="layer-bg">
+    <div class="layer-pop">
+        <button type="button" class="close_btn" style="cursor: pointer">
+            닫기
+        </button>
+        <a href="#">
+            <img alt="팝업등록 배너" id="pop_img">
+        </a>
+        <div class="layer-pop_today">
+            <div class="check_txt_btn">
+                <input type="checkbox" alt="아이디 저장" name="id_save" id="idSave">
+                <label for="idSave">
+                    <span></span>오늘하루 보지않기
+                </label>
+            </div>
+            
+        </div>
+    </div>
+</div>
+
+<script>
+
+    $(document).ready(function () {
+        $(window).scroll(function () {
+            $(".slideanim ").each(function () {
+                var pos = $(this).offset().top;
+
+                var winTop = $(window).scrollTop();
+                if (pos < winTop + 1000) {
+                    $(this).addClass("slide");
+                    $('.header').addClass("fixed");
+                    $('.scroll_view').addClass("on");
+                } else if (winTop == 0) {
+                    $('.header').removeClass("fixed");
+                    $('.scroll_view').removeClass("on");
+                    $(this).removeClass("slide");
+                }
+                $(".main_txt").click(function () {
+
+                });
+            });
+
+        });
+
+        $("#subMenu").hover(function () {
+            $(".sub_menu").addClass("on");
+        });
+
+        $(".header").mouseleave(function () {
+            $(".sub_menu").removeClass("on");
+        });
+
+        $(".close_btn").click(function () {
+            $(".layer-bg").hide();
+        });
+
+        $.ajax({
+            url: "/main/promotion/popup-detail-main",
+            type: "GET",
+            dataType: "json",
+            contentType: "application/json; charset=UTF-8",
+            success: function (result) {
+                if(result.data != null){
+                    var today = new Date();
+                    var startDate = result.data.startDate;
+                    var endDate = result.data.endDate;
+                    startDate = new Date(startDate);
+                    endDate = new Date(endDate);
+                    startDate.setHours(0, 0, 0, 0);
+                    endDate.setHours(0, 0, 0, 0);
+                    today.setHours(0, 0, 0, 0);
+                    if (!isPopupClosed && today >= startDate && today <= endDate) {
+                        // 팝업 레이어를 보이게 설정
+                        $('.layer-bg').show();
+                        $('#pop_img').attr('src', result.data.boardFileInfoFullPathResponse.fullPath);
+                        if(result.data.url!=''){
+                            $('#pop_img').on('click', function () {
+                                // 새 창으로 이동할 페이지 URL
+                                var newPageUrl = result.data.url; // 원하는 URL로 변경
+                                
+                                // 새 창 열기
+                                window.open(newPageUrl, '_blank');
+                            });
+                        }
+                    }
+                }
+            },
+            error: function (e) {
+                console.error(e);
+            }
+        });
+
+        $.ajax({
+            url: "/main/promotion/banner",
+            type: "GET",
+            dataType: "json",
+            async:false,
+            contentType: "application/json; charset=UTF-8",
+            success: function (result) {
+                var slider = document.querySelector('.slider');
+                var data = result.data;
+                // 데이터에서 이미지 정보를 가져와서 img 태그를 생성하고 슬라이더에 추가
+                if(data.dtoList.length > 0){
+                    data.dtoList.forEach(function (item) {
+                        var imageDiv = document.createElement('div');
+                        var anchorTag = ''; 
+                        if (item.url) { 
+                            anchorTag = `<a href="${item.url}" target="_blank">`;
+                        }
+                        imageDiv.innerHTML = `${anchorTag}
+                        <img class="web_banner" alt="main_banner" src="${item.imageFileInfo.fullPath}">
+                        <img class="m_banner" alt="main_banner" src="${item.mobileImageFileInfo.fullPath}">
+                        ${anchorTag ? '</a>' : ''}`;
+                        slider.appendChild(imageDiv);
+                    });
+                }else{
+                    var slider = document.querySelector('.slider');
+                    // classList.remove() 메서드를 사용하여 클래스를 제거
+                    slider.classList.remove('slider');
+                }
+
+
+            },
+            error: function (e) {
+                console.error(e);
+            }
+        });
+        $('.slider').bxSlider({
+            auto: true,                  // 자동넘어가기 여부
+            autoStart: true,            // 자동시작 여부(false일경우 start클릭시 슬라이드시작)
+            autoControls: false,       // 시작/멈춤 버튼 노출 여부
+            autoHover: true,           // 마우스 오버시 정지 여부
+            pause: 5000,               // 자동 전환사이의 시간
+            randomStart: true,          // 랜덤 스타트
+            responsive: true,           // 반응형 여부 체크
+            autoControls: true,         // play, stop 노출여부
+            pager: true,              // 현재 페이지 버튼 노출 여부
+            infiniteLoop: true,        // 마지막이미지에서 다음버튼 클릭시 처음이미지
+            controls: true,           // 이전/다음 버튼 노출 여부
+            mode: 'horizontal',             //horizontal, fade, vertical
+            slideWidth: 1080,       //슬라이더 크기
+            touchEnabled: false
+        });
+        
+        $('#idSave').on('change', function () {
+            if ($(this).is(':checked')) {
+                // 체크되면 쿠키를 설정하고 팝업을 닫음
+                setCookie("popupClosed", "true", 1); // 쿠키 만료일을 하루로 설정
+                $(".layer-bg").hide();
+            }
+        });
+    });
+    // 쿠키 설정 함수
+    function setCookie(cname, cvalue, exdays) {
+        var d = new Date();
+        d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+        var expires = "expires=" + d.toUTCString();
+        document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+    }
+    // 쿠키를 읽어와서 오늘 보지 않기 설정 여부 확인
+    var isPopupClosed = getCookie("popupClosed");
+    $('.layer-bg').hide();
+
+    // 쿠키 가져오기 함수
+    function getCookie(cname) {
+        var name = cname + "=";
+        var decodedCookie = decodeURIComponent(document.cookie);
+        var ca = decodedCookie.split(';');
+        for (var i = 0; i < ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+            }
+            if (c.indexOf(name) == 0) {
+                return c.substring(name.length, c.length);
+            }
+        }
+        return "";
+    }
+</script>
+</body>
+</html>

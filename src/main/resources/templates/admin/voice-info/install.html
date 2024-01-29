@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{layout/default-layout}">
+
+<head>
+    <title>관리자-설치단지현황</title>
+</head>
+
+<body layout:fragment="content">
+   
+    <div id="warpper" class="adminVer">
+      
+        <input type="hidden" id="searchVal" name="searchVal" />
+        <div class="cont">
+            <div class="admin_sec">
+                <div class="admin-tit">
+                    <h4>설치단지현황</h4>
+                    <div class="button__box mgLAuto">
+                        <button type="button" id="searchBtn" name="searchBtn"
+                            class="button__Big button__Navy button w120p">
+                            신규 조회
+                        </button>
+                        <div class="admin-search">
+                            <input type="search" class="admin-search__input" id="searchInput" name="searchInput"
+                                title="검색입력" placeholder="단지명 혹은 단지코드를 입력해주세요.">
+                            <button class="admin-search__btn" type="submit" title="검색">검색</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="admin-table mb20 w100">
+                    <table class="admin-table_list" id="data-table">
+                        <colgroup>
+                            <col width="112">
+                            <col width="*">
+                            <col width="80">
+                            <col width="72">
+                            <col width="120">
+                            <col width="124">
+                            <col width="100">
+                            <col width="160">
+                        </colgroup>
+                        <tbody>
+                            <tr>
+                                <td class="t_head">
+                                    신청일
+                                </td>
+                                <td class="t_head">
+                                    단지명(건물명)
+                                </td>
+                                <td class="t_head">
+                                    설치업체
+                                </td>
+                                <td class="t_head">
+                                    단지코드
+                                </td>
+                                <td class="t_head">
+                                    연락처
+                                </td>
+                                <td class="t_head">
+                                    설치예정일
+                                </td>
+                                <td class="t_head">
+                                    처리여부
+                                </td>
+                                <td class="t_head">
+                                    설치확인서
+                                </td>
+                            </tr>
+                            <tr th:each="dto : ${result.dtoList}" th:onclick="detail_page([[${dto.id}]])" 
+                                    style="cursor: pointer" title="상세페이지"
+                                    th:class="${dto.processingStatus.toString().contains('접수') || dto.processingStatus.toString().contains('대기') ? 'new_row' : ''}">
+                                <td id="applyDate" name="applyDate" >
+                                    <input type="hidden" name="id" th:value="${dto.id}">
+                                    <input type="hidden" name="address" th:value="${dto.address}">
+                                    <input type="hidden" name="broadcastEquipment" th:value="${dto.broadcastEquipment}">
+                                    <input type="hidden" name="isAttachBroadcastEq"
+                                        th:value="${dto.isAttachBroadcastEq}">
+                                    <input type="hidden" name="receiver" th:value="${dto.receiver}">
+
+                                    <span>[[${dto.applyDate}]]</span>
+                                </td>
+                                <td class="t_left">
+                                    <span>[[${dto.aptName}]]</span>
+                                </td>
+                                <td>
+                                    <span>[[${dto.installCompany}]]</span>
+                                </td>
+                                <td>
+                                    <span>[[${dto.aptCd}]]</span>
+                                </td>
+                                <td>
+                                    <span>[[${dto.contact}]]</span>
+                                </td>
+                                <td>
+                                    <span>[[${dto.installationScheduledDate}]]</span>
+                                </td>
+                                <td>
+                                    <span>[[${dto.processingStatus}]]</span>
+                                </td>
+                                <td name="non-click-td">
+                                    <div class="button__box">
+                                        <button type="button" class="button__Small button__darkNavy button w60p"
+                                            id="btn_attach" name="btn_attach" th:onclick="open_fileLayer([[${dto.id}]],[[${dto.attachInstallConfirmCount}]])"
+                                            >
+                                            첨부
+                                        </button>
+                                        <button type="button" class="button__Small button__White button w60p"
+                                            id="btn_confirm" name="btn_confirm" th:onclick="open_confirmLayer([[${dto.id}]])"
+                                            th:style="${dto.isAttachInstallConfirm == true ? 'display:block' : 'display:none'}">
+                                            확인
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="page-box">
+                    <div class="page-box_list">
+                        <div class="prev_btn" th:if="${result.prev}">
+                            <a th:href="@{/admin/voice-info/install(page= ${result.start -1},
+                                            type=${pageRequestDTO.type} ,
+                                            keyword = ${pageRequestDTO.keyword},
+                                            aptCd = ${param.aptCd},
+                                            aptName = ${param.aptName} ) }" tabindex="-1">
+                                <span class="caption">이전</span>
+                            </a>
+                        </div>
+
+                        <div class="page_num">
+                            <div th:each="page: ${result.pageList}">
+                                <a th:class=" 'page-item ' + ${result.page == page?'active':''} " th:href="@{/admin/voice-info/install(page = ${page} ,
+                                        type=${pageRequestDTO.type} ,
+                                        keyword = ${pageRequestDTO.keyword},
+                                        aptCd = ${param.aptCd},
+                                        aptName = ${param.aptName}  )}">[[${page}]]</a>
+                            </div>
+                        </div>
+                        <div class="next_btn" th:if="${result.next}">
+                            <a th:href="@{/admin/voice-info/install(page= ${result.end + 1},
+                                            type=${pageRequestDTO.type} ,
+                                            keyword = ${pageRequestDTO.keyword},
+                                            aptCd = ${param.aptCd},
+                                            aptName = ${param.aptName} ) }"><span
+                                    class="caption">다음</span></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+<div class="layer-bg" style="display:none" id="reg_layer" name="reg_layer">
+
+    <input type="hidden" name="type" id="type" value="INFO_INSTALLATION">
+    <input type="hidden" name="parentId" id="parentId">
+    <input type="hidden" name="attachInstallConfirmCount" id="attachInstallConfirmCount">
+    <div class="layer-cont w320p">
+        <button type="button" name="close_btn" class="close_btn">
+            닫기
+        </button>
+        <div class="layer-tit">
+            <h4>첨부파일 등록</h4>
+            <span>단지 방송장비 / 설치 확인서</span>
+        </div>
+        <form id="uploadForm" name="uploadForm" method="post" enctype="multipart/form-data" onsubmit="return false;">
+        </form>
+        <div class="file-upload mgB16">
+            <label class="file-upload_btn" for="file"><img src="/images/upload_ico.svg">파일 첨부</label>
+            <input type="file" id="file" class="file-upload_file" name="uploadFiles" onchange="addFile(this)">
+        </div>
+        <ul class="file_list">
+
+        </ul>
+        </form>
+        <div class="button__box">
+            <button class="button button__Basic button__darkNavy w50" id="saveButton" name="saveButton">저장</button>
+            <button class="button button__Basic button__White w50" name="close_btn">닫기</button>
+        </div>
+    </div>
+</div>
+
+
+<div class="layer-bg" style="display:none" id="confirm_layer" name="confirm_layer">
+    <div class="layer-cont">
+        <button type="button" class="close_btn" name="close_btn" style="cursor: pointer">
+            닫기
+        </button>
+        <div class="layer-tit">
+            <h4>첨부파일 확인</h4>
+            <span>단지 방송장비 / 설치 확인서</span>
+        </div>
+
+        <div class="file_view">
+        </div>
+
+        <div class="button__box">
+            <button class="button button__Basic button__White w100" name="close_btn">닫기</button>
+        </div>
+    </div>
+</div>
+
+
+    <script>
+        // 첨부파일사용시 필요한 변수들
+        var fileNo = 0;
+        var filesArr = new Array();
+        $(document).ready(function () {
+            $(".install-tab").addClass("active");
+            $(".admin-tab").addClass("active");
+            $("#admin_sub").css('display', 'flex');
+            $(window).scroll(function () {
+                $(".slideanim").each(function () {
+                    var pos = $(this).offset().top;
+
+                    var winTop = $(window).scrollTop();
+                    if (pos < winTop + 1000) {
+                        $(this).addClass("slide");
+                        $('.header').addClass("fixed");
+                    } else if (winTop == 0) {
+                        $(this).removeClass("slide");
+                        $('.header').removeClass("fixed");
+                    }
+                    $(".main_txt").click(function () {
+
+                    });
+                });
+
+            });
+
+            $('button[name="close_btn"]').click(function () {
+                $('.layer-bg').css('display', 'none');
+            })
+
+            $('#searchInput').keyup(function (e) {
+                if (e.keyCode == 13) {
+                    location.href= "/admin/voice-info/install?aptCd=" + $('#searchInput').val() + "&aptName=" + $('#searchInput').val()
+                        + "&installCompanySearch=" + $('#searchInput').val()
+                    ;
+                }
+            })
+
+            // 저장버튼 클릭 시 첨부파일 전송 저장
+            $('#saveButton').click(function () {
+                var filteredFilesArr = filesArr.filter(function (file) {
+                    return file.is_delete !== true;
+                });
+                if(($('#attachInstallConfirmCount').val() * 1 + filteredFilesArr.length) > 5){
+                    alert("이미 5개이상의 첨부파일이 첨부되어있거나, 파일첨부 총 갯수가 5개를 초과합니다.");
+                    return;
+                }
+                if (filteredFilesArr.length == 0) {
+                    alert("첨부파일이 선택되지않았습니다. 첨부파일을 선택한 후 저장해주세요.");
+                    return;
+                }
+                // 폼데이터 담기
+                var form = document.querySelector("form");
+                var formData = new FormData(form);
+                for (var i = 0; i < filteredFilesArr.length; i++) {
+                    // 삭제되지 않은 파일만 폼데이터에 담기
+                    formData.append("uploadFiles", filteredFilesArr[i]);
+                }
+                formData.append("parentId", $('#parentId').val());
+                formData.append("type", $('#type').val());
+                // FormData의 key 확인
+                $.ajax({
+                    url: "/file/upload",
+                    type: "POST",
+                    dataType: "json",
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function (result) {
+                        alert("총"+ filteredFilesArr.length+"개 첨부파일 등록이 완료되었습니다.");
+                        $('.load_bg').hide();
+                        location.reload();
+                    },
+                    error: function (e) {
+                        alert("첨부파일 등록중 에러가발생하였습니다. 관리자에게 문의하세요");
+                        $('.load_bg').hide();
+                    },
+                    beforeSend: function (e) {
+                        $('.load_bg').show();
+                    }
+                });
+            })
+            $("td[name='non-click-td']").on("click", function (event) {
+                // 클릭 이벤트를 무시하고 동작하지 않도록 설정
+                event.preventDefault();
+                event.stopPropagation();
+            });
+        });
+
+        /* 폼 전송 */
+        $('#searchBtn').click(function () {
+            location.href = "/admin/voice-info/install";
+        })
+        function detail_page(id) {
+            window.open('/admin/voice-info/install-detail/' + id, '_blank');
+        }
+
+        function open_fileLayer(id, attachInstallConfirmCount){
+            $('#reg_layer').css('display', 'flex');
+            $('#parentId').val(id);
+            $('#attachInstallConfirmCount').val(attachInstallConfirmCount);
+            
+        }
+
+        function open_confirmLayer(id) {
+            var rowData = {};
+            var fileViewDiv = $(".file_view");
+            fileViewDiv.empty();
+            rowData.boardFileStatus = $('#type').val();
+            var jsonData = JSON.stringify(rowData);
+            $('#confirm_layer').css('display', 'flex');
+            $.ajax({
+                url: "/file/" + id + "?boardFileStatus=" + $('#type').val(),
+                method:"GET",
+                dataType: "json",
+                contentType: "application/json; charset=UTF-8",
+                success: function (result) {
+                    result.forEach(function (imagePath) {
+                         var container = $("<div>"); // 이미지와 관련된 엘리먼트를 감싸는 div 엘리먼트 생성
+                        container.addClass("image-container"); // 필요에 따라 클래스를 추가할 수 있습니다.
+
+                        var imgElement = $("<img>");
+                        imgElement.attr("src", imagePath.fullPath);
+                        container.append(imgElement);
+
+                        var inputElement = $("<input>");
+                        inputElement.attr("type", "hidden");
+                        inputElement.attr("id", "imageId"); // id 설정
+                        inputElement.val(imagePath.fileId); // 값을 설정
+                        container.append(inputElement);
+
+                        var aElement = $("<a>");
+                        aElement.attr("href", "#");
+                        aElement.text("삭제");
+                        aElement.addClass("del_btn");
+                        aElement.on("click", function () {
+                            delete_img(imagePath.fileId);
+                            // 클릭 시 이미지 ID 알림
+                        });
+                        container.append(aElement);
+
+                        fileViewDiv.append(container); // container를 fileViewDiv에 추가
+
+                        
+                        
+                    });
+                },
+                error: function (e) {
+                    console.error(e);
+                }
+            });
+        }
+        function delete_img(fileId) {
+                var fileViewDiv = $(".file_view");
+                var containerToRemove = fileViewDiv.find("div.image-container input#imageId[value='" + fileId + "']").closest("div.image-container");
+                $.ajax({
+                    url: "/file/remove/" + fileId,
+                    type: "DELETE",
+                    dataType: "json",
+                    success: function (result) {
+                        alert("삭제되었습니다.");
+                        containerToRemove.remove();
+                        // location.reload();
+                        
+                    },
+                    error: function (e) {
+                        alert("첨부파일 등록중 에러가발생하였습니다. 관리자에게 문의하세요");
+                    },
+                    beforeSend: function (e) {
+                    }
+                });
+            }
+    </script>
+</body>
+
+</html>

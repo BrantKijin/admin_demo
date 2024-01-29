@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{layout/default-layout}">
+
+<head>
+    <title>XP보이스-배너관리</title>
+</head>
+
+<body layout:fragment="content">
+
+<div id="warpper" class="adminVer">
+	<div class="cont">
+        <div class="admin_sec">
+            <div class="admin-tit">
+                <h4>배너관리</h4>
+                <div class="button__box mgLAuto">
+                    <button type="button" class="button__Big button__Navy button w120p" onclick="location.href='/admin/promotion/banner-write'">  
+                        배너 등록
+                    </button>
+                </div>
+            </div>
+            <div class="admin-table mb20 w100">
+                <table class="admin-table_list">
+                    <colgroup>
+                        <col width="80">
+                        <col width="*">
+                        <col width="200">
+                        <col width="356">
+                    </colgroup>
+                    <tbody>
+                        <tr>
+                            <td class="t_head">
+                                번호
+                            </td>
+                            <td class="t_head">
+                                제목
+                            </td>
+                            <td class="t_head">
+                                기간
+                            </td>
+                            <td class="t_head">
+                                비고
+                            </td>
+                        </tr>
+                        <tr th:each="dto : ${result.dtoList}" th:onclick="detail_page([[${dto.id}]])" style="cursor: pointer" title="상세페이지">
+                            <td>
+                                [[${dto.id}]]
+                            </td>
+                            <td class="t_left">
+                                [[${dto.title}]]
+                            </td>
+                            <td>
+                                [[${dto.startDate}]] ~ [[${dto.endDate}]]   
+                            </td>
+                            <td class="t_left">
+                                [[${dto.content}]]
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="page-box">
+                <div class="page-box_list">
+                    <div class="prev_btn" th:if="${result.prev}">
+                        <a th:href="@{/admin/promotion/banner?type=배너(page= ${result.start -1},
+                                                    type=${pageRequestDTO.type} ,
+                                                    keyword = ${pageRequestDTO.keyword} ) }" tabindex="-1">
+                            <span class="caption">이전</span>
+                        </a>
+                    </div>
+            
+                    <div class="page_num">
+                        <div th:each="page: ${result.pageList}">
+                            <a th:class=" 'page-item ' + ${result.page == page?'active':''} " th:href="@{/admin/promotion/banner?type=배너(page = ${page} ,
+                                                type=${pageRequestDTO.type} ,
+                                                keyword = ${pageRequestDTO.keyword}  )}">[[${page}]]</a>
+                        </div>
+                    </div>
+                    <div class="next_btn" th:if="${result.next}">
+                        <a th:href="@{/admin/promotion/banner?type=배너(page= ${result.end + 1},
+                                                    type=${pageRequestDTO.type} ,
+                                                    keyword = ${pageRequestDTO.keyword} ) }"><span class="caption">다음</span></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+</div>
+<script> 
+    $(document).ready(function () {
+        $(".banner-tab").addClass("active");
+        $(".admin-tab").addClass("active");
+        $("#admin_sub").css('display', 'flex');
+    });
+    function detail_page(id) {
+        location.href= '/admin/promotion/banner-detail/' + id + "?type=배너"
+    }
+</script>
+</body>
+</html>

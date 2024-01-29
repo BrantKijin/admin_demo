@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lagn="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    xmlns="http://www.w3.org/1999/html" layout:decorate="~{layout/default-layout}">
+
+<head>
+    <title>공지사항&게시판</title>
+
+<body layout:fragment="content">
+
+    <div id="warpper">
+        <div class="sub-box bg04">
+            <div class="sub-box mask">
+                <div class="sub-box_tit">
+                    <h3>
+                        커뮤니티
+                    </h3>
+                    <span>공지사항 및 다양한 방송자료들이 있습니다.</span>
+                </div>
+            </div>
+        </div>
+        <div class="cont">
+            <div class="board_sec">
+                <div class="boardView-box">
+                    <div class="boardView-box_tit">
+                        <h4>[[${result.title}]]</h4>
+                    </div>
+                    <div class="boardView-box_info">
+                        <div class="board-fileupload">
+                            <ul class="file_list">
+                                <li th:each="fileInfo : ${result.boardFileInfoFullPathResponses}">
+                                    <a th:href="${fileInfo.fullPath}" target="_blank">[[${fileInfo.fileName}]]</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="post-view">
+                            <p th:utext="${result.content}">
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="button__box mgT28 pdL20 pdR20 mgB32">
+                    <button type="button" class="button__Big button__Navy button w80p" id="btn_update"
+                        th:onclick="fn_update([[${result.id}]]);" sec:authorize="hasAuthority('ADMIN')">
+                        수정
+                    </button>
+                    <button type="button" class="button__Big button__darkNavy button w80p" id="btn_delete"
+                        th:onclick="fn_delete([[${result.id}]]);" sec:authorize="hasAuthority('ADMIN')">
+                        삭제
+                    </button><button type="button" class="button__Big button__darkNavy button w80p"
+                        onclick="window.location.href = currentOS != 'web' ? '/voice-board/index-mob' : '/voice-board/index';">
+                        목록
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+            <script>
+                $(document).ready(function () {
+                    $("#btn-qna").click(function () {
+                        $("#qa-box").css('display', 'block');
+                    })
+                });
+
+                function fn_update(id) {
+                    window.location.href = "/voice-board/voice-manager?type=UPDATE&id=" + id;
+                }
+                function fn_delete(id) {
+                    $.ajax({
+                        url: "/voice-board/manager/" + id,
+                        type: "DELETE",
+                        success: function (result) {
+                            alert("삭제하였습니다.");
+                            if (currentOS != 'web') {
+                                window.location.href = "/voice-board/index-mob";
+                            } else {
+                                window.location.href = "/voice-board/index";
+                            }
+                        },
+                        error: function (e) {
+                            console.error(e);
+                            alert("삭제실패하였습니다. 관리자에게 문의하세요.")
+                        },
+                    });
+                }
+            </script>
+</body>
+
+</html>

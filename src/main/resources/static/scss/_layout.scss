@@ -1,0 +1,996 @@
+@charset "utf-8";
+@import '_base.scss';
+
+/* CSS Document */
+
+
+/* body 부분 페이드 효과 */
+body {    
+	animation: showhide .2s ease-out none;
+    -webkit-animation: showhide .2s ease-out none;
+}
+
+
+
+
+/*html, body {height: 100%;}*/
+
+.main_section {
+  width: 100%; display: flex; position: relative; align-items: center;
+  &.type01 {
+    height: 700px; width: 100%; background-image: url(../images/main_bg.jpg); background-repeat: no-repeat; background-attachment: fixed; background-position: top center; 
+  }
+  &.type02 {
+    padding: 50px 0 112px; background: $white; width: 100%;  display: flex; flex-direction: column;
+  }
+  &.type03 {
+    padding: 48px 0 56px; background: $white; width: 100%;  display: flex; flex-direction: column; background: #fafbfd;
+  }
+  &.type04 {
+    padding: 60px 0 72px; background: $white; width: 100%;  display: flex; flex-direction: column; background: #F4F6FA;
+  }
+  &__info {
+    margin-bottom: 12px;
+    h2 {font-size: 32px; font-weight: 700; line-height: 40px; margin-bottom: 20px;}
+    p {
+      font-size: 22px; line-height: 40px;
+    }
+  }
+
+  &__btn {//버튼
+    @include flex_center; margin-top: 16px;
+    .button {
+      height: 72px; width: 100%; max-width: 400px; font-size: 22px; font-weight: 600;
+    }
+  }
+  .main-service {
+    display: flex; flex-direction: column;
+    &__list {
+      display: grid; grid-template-columns: repeat(3, 1fr); grid-gap: 40px 92px; grid-auto-columns: minmax(300px, 300px); grid-auto-rows: minmax(230px, 230px); padding: 16px 0;
+      li {
+        @include flex_center; border-radius: 20px; border: 1px solid #C2C9E4; background: #FAFBFF;  flex-direction: column; flex: 3;
+        p {
+          font-size: 18px; color: #2b2b2b; margin-top: 12px; line-height: 26px;
+        }
+      }
+    } 
+  }
+  &__cont {//메인 기본 컨텐츠
+    display: flex; flex-direction: column;
+  }
+
+  .main-cs {//고객센터 영역
+    display: flex; flex-direction: column; padding: 32px 20px;
+    &__tit {
+      display: flex; align-items: end; margin-bottom: 20px; 
+      h2 {
+        font-size: 24px; color: #313131; font-weight: 700;
+      }
+      span {
+        color: #5F5F5F; font-size: 18px; margin-left: 12px; display: inline-flex;
+      }
+    }
+    &__list {
+      display: flex; height: 100px; background: #fff; padding: 28px 0;
+      li {
+        display: flex; align-items: center; flex-direction: row; flex: 1; padding: 0 20px; position: relative;
+        p {
+          display: flex; align-items: baseline; flex-direction: column; margin-left: 16px; text-align: left;
+          .cs-tit {
+            font-weight: 600; font-size: 18px; color: #252525; line-height: 22px; margin-bottom: 4px;
+          }
+          span {
+            font-size: 16px; line-height: 20px; color: #666;
+            b {
+              font-size: 18px; margin-left: 8px; font-weight: normal;  color: #252525;
+            }
+          }
+        }
+        &:after {
+          position: absolute; content: ""; right: 0; top: 0; width: 1px; height: 100%; background-color: #BAC0CE;
+        }
+        &:last-child:after {
+          display: none;
+        }
+
+      }
+    } 
+  }
+}
+
+
+
+#warpper {position: relative; width: 100%; text-align: center; min-height: 100%; transition: all .3s; display:  flex; align-items: center; flex-direction: column; padding-top: 90px}
+/* 메인전용 박스 */
+#warpper .main_cont {width: 100%; display: block; position: relative; }  
+
+/* 메인 Xp보이스 기본 안내 영역 */
+.main-view {
+  display: flex;  width: 100%;  height: calc(100% - 90px);  max-width: 1240px;  margin: 90px auto 0;  position: relative;  padding: 0 20px 40px;  align-items: center; justify-content: space-between;
+  &_txt {
+    text-align: left; position: relative;
+    & > * {
+      line-height: 50px;
+    }
+    & h1 {
+      margin-top: 36px;
+      b {
+        font-size: 60px; text-transform: none; line-height: 80px;
+      }
+    }
+    & p {
+      display: flex; align-items: baseline; flex-direction: column; justify-content: left;
+      span {
+        font-size: 32px; 
+      }
+    }
+  }
+  &.scroll_view {
+    &:before {
+      content: ""; width: 20px; height: 20px; border-right: 2px solid #fff; border-bottom: 2px solid #fff; position: absolute; bottom: 0; left: calc(50% - 2px); transform: rotate(45deg) translateX(-50%);
+				animation: scroll_ani 1.5s ease-out infinite;
+	    -webkit-animation: scroll_ani 1.5s ease-out infinite;
+    }
+    &:after {
+      content:"scroll"; width :60px; height: 30px; bottom: 50px; position: absolute; left: 50%; transform: translateX(-50%); color :#fff; text-align: cetner; font-size: 24px;
+    }
+    /* 스크롤 애니메이션 나타나는 모션 01 */
+    @keyframes scroll_ani {
+      0%, 100% {bottom: 30px;}
+      50% {bottom: 15px;}
+    }
+    @-webkit-keyframes scroll_ani {
+      0%, 100% {bottom: 30px;}
+      50% {bottom: 15px;}
+    }
+    &.on {
+      &:before {
+        opacity: 0; display: none;
+      }
+      &:after {
+        opacity: 0; display: none;
+      }
+    }
+  }
+  
+}
+
+
+.consult_box {
+  width: 100%; display: flex;max-width: 700px; flex-direction: column;
+  .consult_input {
+    width: 100%;margin: 0 auto 20px;display: block;
+    ul {
+      width: 100%;  
+      li {
+        display: flex;margin: 0 auto 4px;position: relative;width: 100%;margin-bottom: 32px;flex-wrap: wrap;
+        &:last-child {margin: 0;}
+        .insert_tit {
+          display: flex;width: 100%; font-size: 18px; font-weight: 700;
+        }
+        input {
+          position:relative; height: 60px; padding: 12px 0 12px 20px; width: 100%;display: flex;border: 1px solid #d7d7d7;outline: none;transition:  0.3s all;background-color: #fff;font-size: 16px;border-radius: 0;
+          & + label {
+            width: 100px;height: 20px;display: flex;position: absolute;top: -10px;left: 20px;align-items: center;font-size: 16px;color: #252525;transition: all 0.3s;
+            span {
+              display: flex; transition: all 0.2s; height: 100%; align-items: center; position: absolute; background: transparent; top: 0; z-index: 1; font-weight: 600;
+              &:before {
+                position: absolute; left: -5px; bottom: 0; width: calc(100% + 10px); height: 10px; background: #fff; content: ""; z-index: -1;
+              }
+              b {
+                display: inline-flex; align-items: flex-start;
+              }
+            }
+          }
+          &::placeholder {font-size: 15px; color: #999;
+          }
+          &:hover + label {
+            color: #0d35ac; transition: all 0.3s; 
+          }
+          &:focus {
+            padding: 12px 20px; border-color: #0d35ac; transition: all 0.2s;
+          }
+        }
+        .selectbox {
+          width: 100%; height: 60px; 
+          select {
+            height: 100%; padding: 12px 0 12px 20px; width: 100%;  font-size: 16px;  transition: all 0.3s;
+            &:focus {
+              outline: none;
+              border-color: #0d35ac;
+            }
+          }
+          label {
+            z-index: 1; display: flex; align-items: center; height: 100%; left: 20px; width: 120px; transition: all 0.3s;
+            span {
+              display: flex; transition: all 0.2s; height: 100%; align-items: center; position: absolute; background: transparent; top: -30px; z-index: 1; font-weight: 600;
+              &:before {
+                position: absolute; left: -5px; bottom: 20px; width: calc(100% + 10px); height: 10px; background: #fff; content: ""; z-index: -1; opacity: 1;
+              }
+            }
+          }
+        }
+        P {
+          display: inline-block; height: 25px; width: 100%; line-height: 22px; font-size: 20px; font-weight: 600; margin-top: 10px;
+        }
+      }
+    }
+  }
+}
+
+
+.txt_noti_box {
+  display: flex;border: 1px solid #d9d9d9;width: 100%;background: #fff;
+  & > ul {
+    display: flex; width: 100%; flex-direction: column; padding: 10px;
+    & > li {
+      display: flex;flex-direction: column;font-size: 14px;margin-bottom: 10px;line-height: 1.8; text-align: left;
+      & > b {
+        position: relative;padding-left: 15px;color: #252525;font-size: 14px;
+        &:before {
+          content: "";width: 5px;height: 5px;position: absolute;display: flex;top: 9px;left: 5px;background: #0d35ac;border-radius: 50%;
+        }
+      }
+      & > span {
+        margin-left: 15px; position: relative; padding-left: 15px; color: #454545; word-break: keep-all;
+        &:before {
+          content: "";width: 5px;height: 3px;position: absolute;display: flex;top: 10px;left: 2px;border-left: 1px solid #252525;border-bottom: 1px solid #252525;transform: rotate(-45deg);
+        }
+      }
+    }
+  }
+}
+
+
+
+
+/**/
+.tit {display: block; margin: 20px 0 8px;}
+.tit h4 {font-size: 24px; color: #252525; position: relative; padding-left: 15px; height: 24px; line-height: 100%; text-align: left;}
+.tit h4:before {position: absolute; left: 0; top:0; content: ""; width: 5px; height: 100%; background: #0d35ac;}
+
+/* 기본 컨텐츠 박스 */
+.cont {
+  width: 100%; display: flex; flex-direction: column; align-items: center; flex: 1;
+  &_sec {
+    display: flex; width: 100%; max-width: 1240px; padding: 32px 20px; position: relative; justify-content: center; 
+  }
+  &_bgType {
+    width: 100%; display: flex; justify-content: center; flex-direction: column; align-items: center;
+    &.white {
+      background-color: $white;
+    }
+    &.light_blue {
+      background-color: #F4F6FA;
+    }
+    &.light_gray {
+      background-color: #DADADA;
+    }
+  }
+}
+/* 컨텐츠 별 메뉴 타이틀 */
+
+.sub-box {
+  width: 100%; height: 200px;  @include flex_center; position: relative;
+  &.mask {
+    width: 100%; height: 100%; position: absolute; left:0; top: 0; z-index: 1; background: rgba(0,0,0,0.7);
+  }
+  &_tit {
+    width: 100%; max-width: 1240px; padding: 0 20px; display: flex; flex-direction: column; align-items: center; 
+    h3 {
+      font-size: 40px; font-weight: 700; margin-bottom: 20px; text-align: center; color: $white;
+    }
+    span {
+      font-size: 20px; text-align: center; color: $white;
+    }
+  }
+  &.bg01 {
+    @include bg("sub_tit_bg01",$format:'jpg' ); background-position: center center; background-size: cover;
+  }
+  &.bg02 {
+    @include bg("sub_tit_bg02",$format:'jpg' ); background-position: center center; background-size: cover;
+  }
+  &.bg03 {
+    @include bg("sub_tit_bg03",$format:'jpg' ); background-position: center center; background-size: cover;
+  }
+  &.bg04 {
+    @include bg("sub_tit_bg04",$format:'jpg' ); background-position: center center; background-size: cover;
+  }
+
+}
+
+.function-cont {
+  width: 100%; display: flex; justify-content: space-between; flex-direction: row; align-items: center; padding: 72px 20px; max-width: 1240px;
+  &__img {
+    width: 560px; height: 350px; text-align: left;
+    img {height: 100%;}
+  }
+  &__info {
+    width: 530px; display: inline-flex; flex-wrap: wrap; justify-content: left; height: 332px; flex-direction: column; align-items: baseline;
+    .info_tit {
+      font-weight: 700; line-height: 50px; color: #363636; font-size: 40px; margin-bottom: 28px; position: relative;
+    }
+    .info_txt {
+      font-size: 22px; line-height: 35px; text-align: left; word-break: keep-all; color: #363636;
+    }
+    .info_comment {
+      display: flex; padding: 24px 28px; background: #FAFBFF; margin-top: auto; @include radius(20px); flex-wrap: wrap;
+      & > p {
+        position: relative; font-size: 20px; line-height: 26px; color: #646464; padding-left: 20px; text-align: left; word-break: keep-all; font-weight: 300;
+        &:before {
+          @include befo_after; left:0; top:8px; width: 7px; height: 4px; @include line(1px, #666,0); border-width: 0 0 1px 1px; transform: rotate(-45deg);
+        }
+      }
+    }
+  }
+  &.left {
+    flex-direction: row-reverse;
+    .info_comment {background-color: $white;}
+  }
+}
+
+/* 검색광고 서비스 문의하기 버튼 */
+.ad_fixed_btn {
+  position: fixed; z-index: 100; width: 120px; height: 120px; right: 130px; top: 70%; margin-top: -60px;
+  a {
+    @include flex_center; flex-direction: column; align-items: center; justify-content: center; color: $white; @include radius(15px); font-size: 18px;  background: #0042FF; width: 100%; height: 100%;
+    img {margin-bottom: 12px;}
+  }
+}  
+
+/* 로그인 영역 */
+.login_content {
+  width: 100%; height: 100%; position: relative; display: flex; align-items: center; justify-content: center;
+}
+.login_box {
+  width: 100%; padding: 48px 20px 32px; display: flex; align-items: center; flex-direction: column; position: absolute;
+  .main_text {
+    width: 100%; text-align: center; color: #353535; line-height: 150%; font-weight: 600; display: block; margin-bottom: 24px;
+    b {font-size: 40px;}
+    .text_r_show:after {
+      color: #252525;
+    }
+  }
+}
+
+.login_input {
+  width: 100%; margin: 10px auto 10px; display: block; max-width: 440px;
+  ul {
+    width: 100%;
+    li {
+      display: flex; margin: 0 auto 4px; position: relative; width: 100%; margin-bottom: 24px; 
+      & > input {
+        position:relative;height: 60px; padding: 12px 20px; width: 100%; display: flex; border: 1px solid #d7d7d7 ;outline: none; transition:  0.5s all; background-color: #fff; font-size: 18px; border-radius: 0;
+        & + label {
+          width: 70px;  height: 20px;display: flex;position: absolute;top: -10px;left: 20px;align-items: center;font-size: 18px;font-weight: 600;color: #252525;transition: all 0.3s;
+          & span {
+            display: flex; transition: all 0.5s; height: 100%; align-items: center; position: absolute; background: transparent;  top: 0; z-index: 1;
+            &:before {
+              position: absolute; left: -5px; bottom: 0; width: calc(100% + 10px); height: 10px; background: #fff; content: ""; z-index: -1;
+            }
+          }
+        }
+        &::placeholder {font-size: 15px; color: #999;
+        }
+        &:hover + label {
+          color: #0d35ac; transition: all 0.3s; 
+        }
+        &:focus {
+          border-color: #0d35ac; transition: all 0.2s;
+        }
+      }
+      &.id_check {
+        height: 30px;
+      }
+      & > .login_btn {
+        display: flex; height: 60px; padding: 10px 28px; font-size: 24px; font-weight: 700; background: #0d35ac; color: #fff; justify-content: center; align-items: center; width: 100%; cursor: pointer; position: relative; overflow: hidden;
+        &:before {
+          content:"";width: 50%;	height: 350%;	transform: rotate(30deg);	background: rgba(255,255,255,0.15);	left: -100%;	top: -100%;	position: absolute;	-webkit-transition: -webkit-transform 0.2s;	transition: all 0.2s;
+        }
+        &:hover:before {
+          left: 130%;
+        }
+      }
+    }
+  }
+}
+
+/*푸터 영역 */
+.footer {
+  width: 100%; height: 160px; position: relative; background: #2f2f2f;  text-align: center; @include flex_center;
+  .f_bottom {
+    width: 100%; max-width: 1240px; padding: 0 20px; @include flex_center;
+    p {
+      width: 100%; display: block; text-align: center;
+      span {margin: 0 5px;  line-height: 30px; color: #D9D9D9; font-size: 18px; } 
+    }
+  }
+}
+
+.banner-area {
+  background: $white; padding: 28px 0;
+}
+.bx-wrapper {
+  .bx-viewport {
+    .slider {
+      .web_banner {
+        display: block;
+      }
+      .m_banner {
+        display: none;
+      }
+    }
+  }
+}
+
+
+
+/* 미디어 쿼리 영역 */
+
+@include tablet {
+  .ad_fixed_btn {
+    top: 80%; right: 20px; width: 88px; height: 88px;
+    a {
+      font-size: 16px;
+    }
+  }
+
+  .main_section {
+    width: 100%; display: flex; position: relative; align-items: center;
+    &.type01 {
+      height: calc(100vh  - 100px); width: 100%; background-image: url(../images/main_bg_m.jpg); background-position: center center; background-size: cover;
+      .main-view {
+        height: calc(100%  - 100px); margin: 60px 0 40px; padding: 0 20px; justify-content: center;     flex-direction: column;
+        &_txt {
+          text-align: center; position: relative;
+          & h1 {
+            margin-top: 24px;
+            b {
+              font-size: 60px; text-transform: none; line-height: 80px;
+            }
+          }
+          & p {
+            align-items: center;
+            span {
+              font-size: 26px; 
+            }
+          }
+        }
+      }
+      .main_ca  {
+        display :none;
+      }
+    }
+    &.type02 {
+      padding: 80px 28px 92px;
+      .main-service {
+        &__list {
+          grid-template-columns: repeat(2, 1fr); grid-auto-columns: minmax(100%, 100%); grid-auto-rows: minmax(200px, 200px); grid-gap: 40px; 
+          li {
+            flex-direction: column; justify-content: center; padding: 0 20px;
+            img {width: 130px;}
+            p {
+              font-size: 18px; color: #2b2b2b; margin-top: 12px;
+            }
+          }
+        } 
+      }
+    }
+    &.type04 {
+      padding: 40px 0 48px;
+    }
+    &__info {
+      margin-bottom: 12px;
+      h2 {font-size: 32px; font-weight: 700; line-height: 40px; margin-bottom: 20px;}
+      p {
+        font-size: 22px; line-height: 40px;
+      }
+    }
+    .main-cs {//고객센터 영역
+      padding: 20px 32px;
+      &__list {
+        height: auto; padding: 0 0; flex-wrap: wrap;
+        li {
+          padding: 12px 20px;height: 90px; width: 50%; flex: auto;
+          &:after {
+            top: 50%; height: 50%; background-color: #BAC0CE; transform: translateY(-50%);
+          }
+          &:nth-child(2n):after {
+            display: none;
+          }
+        }
+      } 
+    }
+  }
+
+  .sub-box {
+    height: 180px; 
+    &_tit {
+      width: 100%; max-width: 1240px; padding: 0 40px; 
+      h3 {
+        font-size: 32px; font-weight: 700; margin-bottom: 20px;
+      }
+      span {
+        font-size: 20px;
+      }
+    }
+  }
+  
+  .function-cont {
+    width: 100%; display: flex; justify-content: space-between; flex-direction: column-reverse; align-items: center; padding: 48px 20px; 
+    &__img {
+      height: auto; text-align: left; width: calc(100% - 200px);
+      img {height: auto; max-width: 100%;}
+    }
+    &__info {
+      flex: 1; height: auto; width: calc(100% - 200px); margin-bottom: 20px;
+      .info_tit {
+        line-height: 40px; color: #363636; font-size: 28px; margin-bottom: 16px;
+      }
+      .info_txt {
+        font-size: 20px;
+      }
+      .info_comment {
+        padding: 16px 28px; margin-top: 12px; flex-direction: column; width: 100%;
+        & > p {
+          font-size: 18px;
+        }
+      }
+    }
+    &.left {
+      flex-direction:  column-reverse;
+      .info_comment {background-color: $white;}
+    }
+  }
+
+  .bx-wrapper {
+    padding: 20px !important;  
+  }
+
+}
+
+
+@include mobile {
+
+  .ad_fixed_btn {
+    top: 80%; right: 20px; width: 68px; height: 68px;
+    a {
+      font-size: 12px;
+      img {width: 20px; margin-bottom: 6px;}
+    }
+  }
+  #warpper {
+    padding-top: 60px;
+  }
+  .main_section {
+    width: 100%; display: flex; position: relative; align-items: center;
+    &.type01 {
+      height: calc(100vh  - 100px); width: 100%; background-image: url(../images/main_bg_m.jpg); background-position: center center; background-size: cover;
+      .main-view {
+        height: calc(100%  - 100px); margin: 60px 0 40px; padding: 0 20px; justify-content: center;     flex-direction: column;
+        &_txt {
+          text-align: center; position: relative;
+          & h1 {
+            margin-top: 24px;
+            b {
+              font-size: 60px; text-transform: none; line-height: 80px;
+            }
+          }
+          & p {
+            align-items: center;
+            span {
+              font-size: 26px; 
+            }
+          }
+        }
+      }
+      .main_ca  {
+        display :none;
+      }
+    }
+    &.type02 {
+      padding: 48px 12px;
+      .main-service {
+        &__list {
+          grid-template-columns: repeat(2, 1fr); grid-auto-columns: minmax(100%, 100%); grid-auto-rows: minmax(180px, 180px); grid-gap: 32px; padding: 0;
+          li {
+            flex-direction: column; justify-content: center; padding: 0 20px;
+            img {width: 100px;}
+            p {font-size: 16px;}
+          }
+        } 
+      }
+    }
+    &.type03 {
+      padding: 32px 0;
+    }
+    &__info {
+      margin-bottom: 24px;
+      h2 {font-size: 26px; font-weight: 700; line-height: 40px; margin-bottom: 16px;}
+      p {
+        font-size: 18px; line-height: 30px;
+      }
+    }
+    &__btn {//버튼
+      @include flex_center; margin: 0;
+      .button {
+        height: 60px; width: 100%; max-width: 400px; font-size: 16px; font-weight: 600;
+      }
+    }
+    .main-cs {//고객센터 영역
+      padding: 0 32px;
+      &__list {
+        height: auto; padding: 0 0; flex-wrap: wrap;
+        li {
+          padding: 12px 0 12px 20px;height: 90px; width: 50%; flex: auto;
+          &:after {
+            top: 50%; height: 50%; background-color: #BAC0CE; transform: translateY(-50%);
+          }
+          &:nth-child(2n):after {
+            display: none;
+          }
+          p {
+            span {
+              b {
+                margin-left: 4px;
+              }
+            }
+          }
+        }
+      }
+      &__tit {
+        flex-direction: column;
+        align-items: baseline;
+        span {
+          font-size: 16px; margin: 12px 0 0 0;
+        }
+      } 
+    }
+  }
+
+  .cont {
+    &_sec {
+      padding: 0 20px;
+    }
+  }
+
+  .sub-box {
+    height: 180px; 
+    &_tit {
+      width: 100%; max-width: 1240px; padding: 0 40px; 
+      h3 {
+        font-size: 32px; font-weight: 700; margin-bottom: 20px;
+      }
+      span {
+        font-size: 20px;
+      }
+    }
+  }
+  
+  .function-cont {
+    width: 100%; display: flex; flex-direction: column-reverse; padding: 48px 20px; 
+    &__img {
+      width: calc(100% - 60px);
+      img {height: auto; max-width: 100%;}
+    }
+    &__info {
+      flex: 1; height: auto; width: calc(100% - 60px); margin-bottom: 12px;
+      .info_tit {
+        line-height: 26px; color: #363636; font-size: 18px; margin-bottom: 16px;
+        &:before {
+          height: 10px;
+        }
+      }
+      .info_txt {
+        font-size: 15px; line-height: 22px;
+      }
+      .info_comment {
+        padding: 16px; margin-top: 12px; flex-direction: column; width: 100%;
+        & > p {
+          font-size: 14px;
+        }
+      }
+    }
+    &.left {
+      flex-direction:  column-reverse;
+      .info_comment {background-color: $white;}
+    }
+  }
+
+  .consult_box {
+    padding: 32px 0;
+  }
+
+  .footer {
+    height: 188px; 
+    br {
+      display: inline-block;
+         content: " ";
+         padding: 0 2px 0 0;
+    }
+    .f_bottom {
+      p {
+        display: flex;flex-direction: column;
+        span {line-height: 24px; color: #D9D9D9; font-size: 16px; } 
+      }
+    }
+  }
+
+  .bx-wrapper {
+    .bx-viewport {
+      .slider {
+        .web_banner {
+          display: none;
+        }
+        .m_banner {
+          display: block;
+        }
+      }
+    }
+  }
+
+}
+
+
+@media (max-width:500px) {
+
+  .main_section {
+    width: 100%; display: flex; position: relative; align-items: center;
+    &.type01 {
+      height: calc(100vh  - 100px); width: 100%; background-image: url(../images/main_bg_m.jpg); background-position: center center; background-size: cover;
+      .main-view {
+        height: calc(100%  - 100px); margin: 60px 0 40px; padding: 0 20px;
+        &_txt {
+          text-align: center; position: relative;
+          & h1 {
+            margin-top: 12px;
+            b {
+              font-size: 40px; text-transform: none; line-height: 80px;
+            }
+          }
+          & p {
+            line-height: 30px;
+            span {
+              font-size: 22px; line-height: 30px;
+            }
+          }
+        }
+      }
+      .main_ca  {
+        display :none;
+      }
+    }
+    &.type02 {
+      .main-service {
+        &__list {
+          grid-template-columns: repeat(1, 1fr); grid-auto-columns: minmax(100%, 100%); grid-auto-rows: minmax(100px, 100px); grid-gap: 20px; 
+          li {
+            flex-direction: row; justify-content: left; padding: 0 20px;
+            img {margin-right: 20px; width: 80px}
+            p {
+              font-size: 16px; color: #2b2b2b; margin-top: 0; word-break: keep-all; text-align: left; line-height: 22px;
+            }
+          }
+        } 
+      }
+    }
+    &.type03 {
+      padding: 24px 0;
+    }
+    &__info { 
+      padding: 0 28px;
+      h2 {font-size: 24px; font-weight: 700; line-height: 30px; margin-bottom: 12px;}
+      p {
+        font-size: 16px; line-height: 24px;
+      }
+    }
+    &.type04 {
+      padding: 32px 0;
+    }
+    .main-cs {//고객센터 영역
+      padding: 0 20px;
+      &__list {
+        height: auto; padding: 0 0; flex-wrap: wrap;
+        li {
+          padding: 12px 24px; height: 90px; width: 100%; flex: auto;
+          &:after {
+            display: none;
+          }
+          p {
+            margin-left: 20px;
+            span {
+              b {
+                margin-left: 8px;
+              }
+            }
+          }
+        }
+      }
+      &__tit {
+        h2 {font-size: 20px;}
+        span {
+          text-align: left; line-height: 22px;
+        }
+      } 
+    }
+  }
+  
+  .sub-box {
+    height: 150px; 
+    &_tit {
+       padding: 0 20px;
+      h3 {
+        font-size: 24px; 
+      }
+      span {
+        font-size: 16px; text-align: center; line-height: 22px;
+      }
+    }
+  }
+  
+  .function-cont {
+    padding: 32px 20px; 
+    &__img {
+      width: 100%; height: auto;
+    }
+    &__info {
+      width: 100%;
+      .info_tit {
+        line-height: 26px; color: #363636; font-size: 18px; margin-bottom: 16px;
+      }
+      .info_txt {
+        font-size: 15px; line-height: 22px;
+      }
+      .info_comment {
+        padding: 16px; margin-top: 12px; flex-direction: column; width: 100%;
+        & > p {
+          padding-left: 16px; line-height: 21px;
+        }
+      }
+    }
+    &.left {
+      flex-direction:  column-reverse;
+      .info_comment {background-color: $white;}
+    }
+  }
+
+  .consult_box {
+    .consult_input {
+      ul {
+        li {
+          input {
+            padding: 12px 20px;
+          }
+          textarea {
+            padding: 12px 20px;
+          }
+          .selectbox {
+            select {
+              height: 100%; padding: 12px 20px; width: 100%;  font-size: 16px;
+              &:focus {
+                outline: none;
+                border-color: #0d35ac;
+              }
+            }
+            label {
+              height: 100%;
+              span {
+                top: -30px;
+                &:before {
+                  opacity: 1;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  
+  .footer {
+    .f_bottom {
+      padding: 0;
+      br {
+        display: inline-block;
+           content: " ";
+           padding: 0 2px 0 0;
+      }
+      p {
+        span {line-height: 21px; color: #D9D9D9; font-size: 13px; } 
+      }
+    }
+  }
+
+  .login_box {
+    .login_input {
+      ul {
+        li {
+          input {
+            padding: 12px 20px;
+          }
+          .check_txt_btn { 
+            input[type=checkbox] + label { 
+              span {top: 11px;}
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .check_txt_btn {
+    input[type=checkbox] {
+      & + label {
+        font-size: 14px;
+        span {
+          top: 9px;
+        }
+      }
+    }
+  }
+
+}
+
+
+@media (max-width:320px) {
+  .main_section {
+    width: 100%; display: flex; position: relative; align-items: center;
+    &.type01 {
+      height: calc(100vh  - 120px); width: 100%; background-image: url(../images/main_bg_m.jpg); background-position: center center; background-size: cover;
+      .main-view {
+        height: calc(100%  - 120px); margin: 60px 0 20px; padding: 0 20px;
+        &_txt {
+          text-align: center; position: relative;
+          & h1 {
+            margin-top: 12px;
+            b {
+              font-size: 38px; text-transform: none; line-height: 80px;
+            }
+          }
+          & p {
+            line-height: 30px;
+            span {
+              font-size: 17px; line-height: 30px;
+            }
+          }
+        }
+      }
+      .main_ca  {
+        display :none;
+      }
+    }
+    &.type02 {
+      .main-service {
+        &__list {
+          grid-template-columns: repeat(1, 1fr); grid-auto-columns: minmax(100%, 100%); grid-auto-rows: minmax(80px, 80px); grid-gap: 12px; 
+          li {
+            flex-direction: row; justify-content: left; padding: 0 12px 0 12px;
+            img {width: 60px; margin-right: 8px;}
+            p {
+              font-size: 14px; line-height: 21px;
+            }
+          }
+        } 
+      }
+    }
+  }
+
+  .main_section.type01 .main-view_txt p span {font-size: 17px;}
+
+  .check_txt_btn {
+    input[type=checkbox] {
+      & + label {
+        font-size: 13px;
+      }
+    }
+  }
+
+  .footer {
+    .f_bottom {
+      p {
+        span {line-height: 19px; font-size: 12px; } 
+      }
+    }
+  }
+
+}

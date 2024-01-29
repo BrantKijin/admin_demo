@@ -1,0 +1,324 @@
+
+/* 헤더 영역 수정*/
+.header {
+    width: 100%; display: flex; height: 90px; position: fixed; z-index: 10; background: #fff; box-shadow: 0 0 10px rgba(0,0,0,0.1); transition: all .3s; min-width: 280px; flex-wrap: wrap;
+    .logo {//로고
+        height: 100%;
+        a {
+           display: inline-flex; width: 161px; height: 100%; background: url(../images/logo.svg) no-repeat center center; text-indent: -9999px; cursor: pointer;
+        }
+    }
+    .warp {
+        display: flex; margin: 0 auto; position: relative; width: 100%; max-width: 1240px; height: 100%;  padding: 0 20px;
+        .t_menu {//헤더 카테고리
+            display: block; height: 100%; margin-left: auto;
+            li {
+                display: inline-flex; float: left; margin: 0 48px 0 0; text-align: center; position: relative; align-items: center; height: 100%;
+                a {
+                    letter-spacing: -0.5px; display: inline-block; line-height: 25px; font-size: 18px; color: #252525; transition: 0.5s all; position: relative; line-height: 30px; cursor: pointer;
+                    &:hover, &.active {color: #0042FF;}
+                    &:hover:before, &.active:before,&:hover:after, &.active:after {width: 50%;}
+                }
+                &:last-child {margin: 0;}
+            }
+        }
+    }
+
+    .sub_menu {
+        width: 100%; height: 0; background: #fff; border-top: 1px solid #d9d9d9; justify-content: center; display: none; transition: all .3s;box-shadow: 0 4px 4px rgba(0,0,0,0.1);  z-index: 1;
+        &.on {
+            display: flex; height: 48px; 
+        }
+        .admin_menu {
+            display: flex; justify-content: flex-end; width: 100%; max-width: 1240px; height: 100%; padding: 0 20px;
+            ul {
+                width: auto; max-width: none; margin-left: auto; padding: 0;
+            }
+            .admin_info {
+                display: inline-flex; align-items: center;
+                * {margin-right: 8px;}
+                .button{ padding: 0;}
+            }
+        }
+        ul {
+            display: flex; justify-content: flex-end; width: 100%; max-width: 1240px; height: 100%; padding: 0 20px;
+            li {
+                align-items: center; display: flex; margin-left: 32px;
+                a {
+                    font-size: 16px; color:#202020;
+                }
+                &:first-child {
+                    margin: 0;
+                }
+            }
+        }
+    }
+
+    &.mainVer {//메인의 경우에만
+        background: transparent; box-shadow: none; 
+        .logo {
+            a {background: url(../images/logo_white.svg) no-repeat center center;}
+        }
+        .warp {   
+            .t_menu {
+                a {
+                    color: #fff;
+                }
+            }
+        }
+        &:hover {
+            background: $white;
+            .logo {
+                a {background: url(../images/logo.svg) no-repeat center center;}
+            }
+            .warp {
+                .t_menu {
+                    a {
+                        color: #252525;
+                        &:hover {
+                            color: #0042ff;
+                        }
+                    }
+                }
+            }
+            .ham-menu {
+                span {
+                    background: #222;
+                }
+            }
+            input[id="hamMenu"] {
+                & + label {
+                    & > span {
+                        background: #222;
+                    }
+                }
+            }
+        }
+        input[id="hamMenu"] {
+            & + label {
+                & > span {
+                    background: $white;
+                }
+            }
+        }
+    }
+    &.fixed {
+        position: fixed;
+        input[id="hamMenu"] {
+            & + label {
+                & > span {
+                    background: #222;
+                }
+            }
+        }
+    }
+    &.adminVer {
+        position: fixed; height: 90px + 48px; background: $white;
+        .warp {height: 90px;}
+        input[id="hamMenu"] {
+            & + label {
+                & > span {
+                    background: #222;
+                }
+            }
+        }
+        .sub_menu {
+            display: flex;
+            height: 48px;
+        }
+        
+    }
+    .m_menu {
+        display: none;
+        width: 100%;
+        #header {
+            & > ul {
+                overflow-y: auto; flex: 1; margin-top: 12px;
+                &::-webkit-scrollbar {
+                    display: none;
+                }
+                & > li {
+                    width: 100%;  display: flex; align-items: center; flex-direction: column; transition: all .3s;
+                    & > a {
+                        width: 100%; height: 50px; display: flex; align-items: center; font-size: 16px; font-weight: 600; color: #222;position: relative; padding: 0 8px;
+                    }
+                    &:last-child {
+                        a {
+                            border-bottom: 0;
+                        }
+                    }
+                }
+            }
+            .admin_info {
+                display: flex; flex-direction: column; background: #F9F9F9; @include radius(8px); padding: 16px 20px;
+                * {font-size: 14px; margin-bottom: 12px;}
+                h4 {color: #404040; font-weight: 500;}
+                b {color: #222;}
+                .admin_txt_btn {
+                    display: flex;  border-top: 1px solid #e6e6e6; padding-top: 12px; margin: 0;
+                    a {
+                        font-size: 14px; width: 50%; text-align: center; margin: 0;
+                    }
+                }
+            }
+        }
+        input[class="toggle_menu"] {
+            display:none;
+            & + label {
+                display:flex; width:100%; height:50px; cursor:pointer; font-weight: 600; color: #222; align-items: center; position: relative; font-size: 16px;padding: 0 8px;
+                &:after {
+                    content: "";
+                    position: absolute;
+                    top: 20px;
+                    right: 16px;
+                    width: 8px; height: 8px;
+                    border: 2px solid #202020;
+                    border-width:  0 2px 2px 0;
+                    transform: rotate(45deg);
+                    transition: all .15s;
+                }
+                &:before {
+                    content:""; position: absolute; left: 0; bottom: 0; width: 0; height: 1px; background: #e6e6e6; transition: all .15s;
+                }
+            }
+            &:checked + label {
+                &:before {
+                    width: 100%;
+                }
+                &:after {
+                    transform: rotate(225deg); top: 24px;
+                }
+            }
+            &:checked + label + .toggle_list {
+                height: auto; opacity: 1; padding-bottom: 16px;
+            }
+        }
+        .toggle_list {
+            display: flex; flex-wrap: wrap; width: 100%; height: 0; opacity: 0; transition: all .15s; 
+            li {
+                width: 100%; display: block;
+                a {
+                    display: flex; align-items: center; font-size: 15px; color: #4f4f4f;
+                    height: 40px; padding: 0 8px;
+                } 
+            }
+        }
+    }
+    input[id="hamMenu"] {
+        display:none;
+        & + label {
+            position: absolute; display:flex; width:40px; height:40px;cursor:pointer;  /* 커서를 올려놓을 때 모양이 바뀐다. */ justify-content: center; align-items: center; top: 50%; right: 40px; transform: translateY(-50%); z-index: 20;
+            & > span {
+                position: absolute; display:flex; width:24px; height:2px; background:#fff;  transition: all 0.35s; z-index:2;
+                &:nth-child(1) {top:12px;}
+                &:nth-child(2) {top:50%; transform: translateY(-50%);}
+                &:nth-child(3) {bottom:12px;}
+            }
+        }
+        &:checked + label {
+            & > span {
+                background: #000;
+                &:nth-child(1) {top:50%; transform:translateY(-50%) rotate(45deg);}
+                &:nth-child(2) {opacity: 0;}
+                &:nth-child(3) {bottom:50%; transform:translateY(50%) rotate(-45deg);}
+            }
+        }
+        & + label + #header {
+            position:fixed; width:100%; height:100%; background:#fff;top:0px; padding:90px 40px 0; box-sizing:border-box; right:-100%; z-index:1; transition: all 0.25s; display: flex; flex-direction: column;
+        }
+        &:checked + label + #header {
+            right:0px;
+        }
+
+    }
+}
+
+//테블렛 타입 721 ~ 1024 사이
+@include tablet { 
+    .header {
+        .warp {
+            display: none;
+            .t_menu {
+                display: none;
+            }
+        }
+        .ham-menu {
+            displaY: flex;
+        }
+        .m_menu {
+            display: block;
+            .logo {
+                position: absolute; left: 40px; z-index: 20;
+            }
+        }
+        &.adminVer {
+            height: 90px;
+            .sub_menu {
+                display: none;
+            }
+        }
+    }
+    
+}
+  
+
+//모바일 720 이하
+@include mobile { 
+    .header {
+        .warp {
+            display: none;
+            .t_menu {
+                display: none;
+            }
+        }
+        input[id=hamMenu] {
+            &+label {
+                displaY: flex; right: 20px;
+            }
+            &+label+#header {
+                padding: 60px 20px 0;
+            }
+        }
+            
+        .m_menu {
+            display: block;
+            .logo {
+                position: absolute; left: 20px; z-index: 20;
+            }
+        }
+        &.mainVer {
+            &:hover {
+                .logo {
+                    a {background: url(../images/logo.svg) no-repeat center center;}
+                }
+            }
+        }
+        &.adminVer {
+            height: 60px;
+            .sub_menu {
+                display: none;
+            }
+        }
+    }
+}
+
+//모바일 중 사이즈 500 이하 경우
+@media (max-width:500px) {
+
+    .header {
+        height: 60px; 
+        .logo a {
+            width: 110px; height: 100%; background-size: 110px 20px;
+        }
+        &.mainVer {
+            .logo {
+                a {background-size: 110px 20px;}
+            }
+            &:hover {
+                .logo {
+                    a {background: url(../images/logo.svg) no-repeat center center; background-size: 110px 20px;}
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,188 @@
+@charset "utf-8";
+
+//폰트는 SUIT 
+@font-face {
+  font-family: 'SUIT';
+  font-weight: 400;
+  font-style: normal;
+  src: url('../css/font/SUIT-Regular.eot');
+  src: url('../css/font/SUIT-Regular.eot?#iefix') format("embedded-opentype"), url('../css/font/SUIT-Regular.woff2') format("woff2"), url('../css/font/SUIT-Regular.woff') format("woff"), url('../css/font/SUIT-Regular.ttf') format("truetype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SUIT';
+  font-weight: 600;
+  font-style: normal;
+  src: url('../css/font/SUIT-SemiBold.eot');
+  src: url('../css/font/SUIT-SemiBold.eot?#iefix') format("embedded-opentype"), url('../css/font/SUIT-SemiBold.woff2') format("woff2"), url('../css/font/SUIT-SemiBold.woff') format("woff"), url('../css/font/SUIT-SemiBold.ttf') format("truetype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SUIT';
+  font-weight: 700;
+  font-style: normal;
+  src: url('../css/font/SUIT-Bold.eot');
+  src: url('../css/font/SUIT-Bold.eot?#iefix') format("embedded-opentype"), url('../css/font/SUIT-Bold.woff2') format("woff2"), url('../css/font/SUIT-Bold.woff') format("woff"), url('../css/font/SUIT-Bold.ttf') format("truetype");
+  font-display: swap; 
+}
+
+* {
+  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -o-box-sizing: border-box;
+
+  &:before, &:after {
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -o-box-sizing: border-box;
+  }
+}
+
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video, button {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 15px;
+  font-family: "suit", 'Malgun Gothic', '맑은 고딕', '돋움', Dotum, Sans-serif;
+  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -o-box-sizing: border-box;
+  color: #202020;
+}
+
+:-webkit-input-placeholder, :-ms-placeholder, :-moz-placeholder, ::placeholder {
+  font-family: "suit", 'Malgun Gothic', '맑은 고딕', '돋움', Dotum, Sans-serif;
+}
+
+html {
+  position: relative;
+  width: 100%;
+  min-height: 100%;
+  height: 100%;
+  font-weight: 400;
+  min-width: 280px;
+  animation: showhide .7s ease-out none;
+	  -webkit-animation: showhide .7s ease-out none;
+}
+
+body {
+  position: relative;
+  min-height: 100%;
+  height: 100%;
+  min-width: 280px;
+  -webkit-font-smoothing: antialiased;
+  background: #f4f6fa;
+  touch-action: pan-y;
+}
+
+h1 {
+  font-weight: 700;
+}
+
+h2, h3, h4, h5, h6 {
+  font-weight: 600;
+}
+
+/* HTML5 display-role reset for older browsers */
+
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
+  display: block;
+}
+
+body {
+  line-height: 1; 
+}
+
+ol, ul, li, dl, dt, dd {
+  list-style: none;
+}
+
+button, img, button, select, input, label {
+  font-family: 'suit';
+  vertical-align: middle;
+  border: none;
+  margin: 0;
+  padding: 0;
+}
+
+button {
+  &:disabled {
+    cursor: default;
+  }
+
+  background: transparent;
+
+  
+
+  > span {
+    position: relative;
+  }
+}
+
+blockquote, q {
+  quotes: none;
+}
+
+blockquote {
+  &:before, &:after {
+    content: '';
+    content: none;
+  }
+}
+
+q {
+  &:before, &:after {
+    content: '';
+    content: none;
+  }
+}
+
+table {
+  table-layout: fixed;
+  border: 0;
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+th, td {
+  word-break: break-all;
+}
+
+caption {
+  overflow: hidden;
+  width: 0;
+  height: 0;
+  font-size: 0;
+  line-height: 0;
+  text-indent: -9999px;
+  display: block;
+} 
+
+a {
+  text-decoration: none;
+  color: #363636;
+  &:hover, &:active, &:visited {
+    text-decoration: none;
+  }
+}
+
+input:-webkit-autofill {
+  box-shadow: 0 0 0 1000px white inset !important;
+  -webkit-box-shadow: 0 0 0 1000px white inset !important;
+
+  &:hover, &:focus, &:active {
+    box-shadow: 0 0 0 1000px white inset !important;
+    -webkit-box-shadow: 0 0 0 1000px white inset !important;
+  } 
+}
+
+input {
+  &::placeholder {
+    color: #909090; font-size: 13px;
+  }
+}
