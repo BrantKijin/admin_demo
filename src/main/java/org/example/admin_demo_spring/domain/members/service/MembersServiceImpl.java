@@ -32,13 +32,7 @@ public class MembersServiceImpl implements MembersService {
 
 	@Override
 	public Optional<Members> getByLoginId(String loginId) {
-		Optional<Members> byLoginId = membersRepository.findByLoginId(loginId);
-
-		if(byLoginId.isPresent()){
-			return byLoginId;
-		}
-		System.out.println(byLoginId);
-		return null;
+		return membersRepository.findByLoginId(loginId);
 	}
 
 	@Override
