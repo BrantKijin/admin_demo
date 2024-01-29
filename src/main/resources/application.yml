@@ -1,5 +1,8 @@
 server:
   port: 9999
+  servlet:
+    session:
+      timeout: 3600s # 세션 1시간
 spring:
   profiles:
     include: jwt
@@ -11,12 +14,11 @@ spring:
     properties:
       hibernate:
         format_sql: true
-        # show_sql: true
+        #show_sql: true
         default_batch_fetch_size: 1000
   datasource:
     url: jdbc:postgresql://localhost:5432/talk
     username: postgres
     password: aegisep1234@
     driver-class-name: org.postgresql.Driver
-
 

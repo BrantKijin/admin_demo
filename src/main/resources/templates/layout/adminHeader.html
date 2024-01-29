@@ -62,34 +62,34 @@
                     <a href="#" onclick="redirect_url()">연장하기</a>
                 </div>
             </div>
-            <ul>
-                <li><a th:href="@{/}">홈</a></li>
-                <li><a th:href="@{/home/function}">주요기능</a></li>
-                <li><a th:href="@{/data/sound-track}">음성샘플</a></li>
-                <li>
-                    <input type="checkbox" id="toggle_menu1" class="toggle_menu">
-                    <label for="toggle_menu1">커뮤니티</label>
-                    <ul class="toggle_list">
-                        <li><a th:href="@{/board/index-mob}">게시판</a></li>
-                        <li><a href="https://prod-xpvoice-s3.s3.ap-northeast-2.amazonaws.com/COMMON/XP%EB%B3%B4%EC%9D%B4%EC%8A%A4+%EB%A7%A4%EB%89%B4%EC%96%BC_v3.pdf">사용매뉴얼</a></li>
-                        <li><a href="https://prod-xpvoice-s3.s3.ap-northeast-2.amazonaws.com/COMMON/Xp%EB%B3%B4%EC%9D%B4%EC%8A%A4_%EC%86%8C%EA%B0%9C%EC%84%9C_v3.pdf">제안서</a></li>
-                        <li><a th:href="@{/voice-board/index-mob}">방송자료실</a></li>
-                    </ul>
-                </li>
-                <li><a th:href="@{/main/voice-request}">상담신청</a></li>
-                <li>
-                    <input type="checkbox" id="toggle_menu2" class="toggle_menu">
-                    <label for="toggle_menu2">관리자모드</label>
-                    <ul class="toggle_list">
-                        <li sec:authorize="hasAuthority('ADMIN')"><a th:href="@{/admin/voice-info-mob}" >상담신청현황</a></li>
-                        <li><a th:href="@{/admin/voice-info/install-mob}">설치단지현황 </a></li>
-                        <li sec:authorize="hasAuthority('ADMIN')"><a th:href="@{/admin/promotion/banner-mob?type=배너}">배너관리</a></li>
-                        <li sec:authorize="hasAuthority('ADMIN')"><a th:href="@{/admin/promotion/popup-detail}" >팝업관리</a></li>
-                        <li sec:authorize="hasAuthority('ADMIN')"><a th:href="@{/admin/sound-track-mob}" >음성샘플관리 </a></li>
-                        <li sec:authorize="hasAuthority('ADMIN')"><a th:href="@{/admin/login-info-mob}" >회원관리 </a></li>
-                    </ul>
-                </li>
-            </ul>
+<!--            <ul>-->
+<!--                <li><a th:href="@{/}">홈</a></li>-->
+<!--                <li><a th:href="@{/home/function}">주요기능</a></li>-->
+<!--                <li><a th:href="@{/data/sound-track}">음성샘플</a></li>-->
+<!--                <li>-->
+<!--                    <input type="checkbox" id="toggle_menu1" class="toggle_menu">-->
+<!--                    <label for="toggle_menu1">커뮤니티</label>-->
+<!--                    <ul class="toggle_list">-->
+<!--                        <li><a th:href="@{/board/index-mob}">게시판</a></li>-->
+<!--                        <li><a href="https://prod-xpvoice-s3.s3.ap-northeast-2.amazonaws.com/COMMON/XP%EB%B3%B4%EC%9D%B4%EC%8A%A4+%EB%A7%A4%EB%89%B4%EC%96%BC_v3.pdf">사용매뉴얼</a></li>-->
+<!--                        <li><a href="https://prod-xpvoice-s3.s3.ap-northeast-2.amazonaws.com/COMMON/Xp%EB%B3%B4%EC%9D%B4%EC%8A%A4_%EC%86%8C%EA%B0%9C%EC%84%9C_v3.pdf">제안서</a></li>-->
+<!--                        <li><a th:href="@{/voice-board/index-mob}">방송자료실</a></li>-->
+<!--                    </ul>-->
+<!--                </li>-->
+<!--                <li><a th:href="@{/main/voice-request}">상담신청</a></li>-->
+<!--                <li>-->
+<!--                    <input type="checkbox" id="toggle_menu2" class="toggle_menu">-->
+<!--                    <label for="toggle_menu2">관리자모드</label>-->
+<!--                    <ul class="toggle_list">-->
+<!--                        <li sec:authorize="hasAuthority('ADMIN')"><a th:href="@{/admin/voice-info-mob}" >상담신청현황</a></li>-->
+<!--                        <li><a th:href="@{/admin/voice-info/install-mob}">설치단지현황 </a></li>-->
+<!--                        <li sec:authorize="hasAuthority('ADMIN')"><a th:href="@{/admin/promotion/banner-mob?type=배너}">배너관리</a></li>-->
+<!--                        <li sec:authorize="hasAuthority('ADMIN')"><a th:href="@{/admin/promotion/popup-detail}" >팝업관리</a></li>-->
+<!--                        <li sec:authorize="hasAuthority('ADMIN')"><a th:href="@{/admin/sound-track-mob}" >음성샘플관리 </a></li>-->
+<!--                        <li sec:authorize="hasAuthority('ADMIN')"><a th:href="@{/admin/login-info-mob}" >회원관리 </a></li>-->
+<!--                    </ul>-->
+<!--                </li>-->
+<!--            </ul>-->
         </div>
     </div>
     </div>

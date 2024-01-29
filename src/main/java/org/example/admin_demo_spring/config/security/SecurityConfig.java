@@ -43,14 +43,8 @@ public class SecurityConfig {
 			.cors(corsCustomizer -> corsCustomizer.configurationSource(request -> {
 				CorsConfiguration config = new CorsConfiguration();
 				config.setAllowedOrigins(
-					Arrays.asList(
-						"https://devxpvoice.xperp.co.kr"
-						, "https://xpvoice.xperp.co.kr"
-						, "http://211.252.81.158"          // XP보이스 CS 프로그램
-						, "https://211.252.81.158"         // XP보이스 CS 프로그램
-						, "https://aegis-hub.apti.co.kr" // 아파트 아이 PROD
-						, "http://34.22.86.88"           // 아프타 아이 DEV
-
+					List.of(
+						// cors 에러방지 site 등록
 					)
 				);
 				config.setAllowedMethods(Collections.singletonList("*"));

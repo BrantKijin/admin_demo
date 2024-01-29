@@ -14,10 +14,7 @@ import lombok.RequiredArgsConstructor;
 public class MembersRepositoryImpl implements MembersRepositoryCustom {
 	private final JPAQueryFactory queryFactory;
 
-	@Override
-	public Optional<Members> findByLoginId(String loginId) {
-		return Optional.empty();
-	}
+
 
 	@Override
 	public Page<Members> getUserPageList(Pageable pageable) {

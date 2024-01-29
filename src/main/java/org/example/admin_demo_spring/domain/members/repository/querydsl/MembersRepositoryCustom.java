@@ -7,7 +7,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 public interface MembersRepositoryCustom {
-	Optional<Members> findByLoginId(String loginId);
 
 	Page<Members> getUserPageList(Pageable pageable);
 

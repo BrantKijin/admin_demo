@@ -6,12 +6,12 @@ import org.example.admin_demo_spring.common.enums.RoleStatus;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 
-public record VoiceUserUpdateRequest(
+public record MemberUpdateRequest(
 	@Schema(description = "권한", example = "권한")
 	RoleStatus roleStatus,
 
-	@Schema(description = "설치업체명", example = "설치업체명")
-	String installCompany
+	@Schema(description = "이름", example = "김기술")
+	String memberName
 
 ) {
 }

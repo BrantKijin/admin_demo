@@ -9,10 +9,10 @@ import org.example.admin_demo_spring.common.enums.RoleStatus;
 import org.example.admin_demo_spring.domain.members.dto.request.VoiceUserAddRequest;
 import org.example.admin_demo_spring.domain.members.dto.request.VoiceUserInitPasswordRequest;
 import org.example.admin_demo_spring.domain.members.dto.request.VoiceUserUpdatePasswordRequest;
-import org.example.admin_demo_spring.domain.members.dto.request.VoiceUserUpdateRequest;
+import org.example.admin_demo_spring.domain.members.dto.request.MemberUpdateRequest;
 import org.example.admin_demo_spring.domain.members.dto.response.SignInResponse;
-import org.example.admin_demo_spring.domain.members.dto.response.VoiceDetailUserResponse;
-import org.example.admin_demo_spring.domain.members.dto.response.VoiceUserResponse;
+import org.example.admin_demo_spring.domain.members.dto.response.MembersDetailResponse;
+import org.example.admin_demo_spring.domain.members.dto.response.MembersResponse;
 import org.example.admin_demo_spring.domain.members.entity.Members;
 
 
@@ -20,32 +20,25 @@ public interface MembersService {
 
 	Optional<Members> getByLoginId(String loginId);
 
-	Long join(String loginId, String password, RoleStatus role);
+	Long join(String loginId, String password, RoleStatus role,String memberName);
 
 	SignInResponse login(String loginId, String password);
 
-	PageResultDTO<VoiceUserResponse, Members> getUserInfoList(PageRequestDTO requestDTO);
+	PageResultDTO<MembersResponse, Members> getUserInfoList(PageRequestDTO requestDTO);
 
-	void addUser(VoiceUserAddRequest request);
 
 	void passwordReset(Long id);
-
-	void passwordAllReset(Long id);
 
 	void passwordInitChange(Long id, VoiceUserInitPasswordRequest request);
 
 	void changePassword(Long id, VoiceUserUpdatePasswordRequest request);
 
-	void changeRoleInstallCompany(Long id, VoiceUserUpdateRequest request);
+	void changeRoleAndName(Long id, MemberUpdateRequest request);
 
-	String getInstallCompanyName(String loginID);
 
-	String getLastUserId();
+	MembersDetailResponse getUserDetailInfo(Long id);
 
-	VoiceDetailUserResponse getUserDetailInfo(Long id);
-
-	List<String> getInstallCompanyNameList();
 
 	Long getVoiceUserId(String userName);
-
+	void passwordAllReset(Long id);
 }

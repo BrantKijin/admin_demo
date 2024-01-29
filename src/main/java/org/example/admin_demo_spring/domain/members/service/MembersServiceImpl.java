@@ -1,6 +1,5 @@
 package org.example.admin_demo_spring.domain.members.service;
 
-import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
@@ -11,11 +10,10 @@ import org.example.admin_demo_spring.common.enums.RoleStatus;
 import org.example.admin_demo_spring.domain.members.dto.request.VoiceUserAddRequest;
 import org.example.admin_demo_spring.domain.members.dto.request.VoiceUserInitPasswordRequest;
 import org.example.admin_demo_spring.domain.members.dto.request.VoiceUserUpdatePasswordRequest;
-import org.example.admin_demo_spring.domain.members.dto.request.VoiceUserUpdateRequest;
+import org.example.admin_demo_spring.domain.members.dto.request.MemberUpdateRequest;
 import org.example.admin_demo_spring.domain.members.dto.response.SignInResponse;
-import org.example.admin_demo_spring.domain.members.dto.response.VoiceDetailUserResponse;
-import org.example.admin_demo_spring.domain.members.dto.response.VoiceUserInstallCompanyResponse;
-import org.example.admin_demo_spring.domain.members.dto.response.VoiceUserResponse;
+import org.example.admin_demo_spring.domain.members.dto.response.MembersDetailResponse;
+import org.example.admin_demo_spring.domain.members.dto.response.MembersResponse;
 import org.example.admin_demo_spring.domain.members.entity.Members;
 import org.example.admin_demo_spring.domain.members.repository.MembersRepository;
 import org.springframework.data.domain.Page;
@@ -36,22 +34,28 @@ public class MembersServiceImpl implements MembersService {
 
 	@Override
 	public Optional<Members> getByLoginId(String loginId) {
-		return membersRepository.findByLoginId(loginId);
+		Optional<Members> byLoginId = membersRepository.findByLoginId(loginId);
+
+		if(byLoginId.isPresent()){
+			return byLoginId;
+		}
+		System.out.println(byLoginId);
+		return null;
 	}
 
 	@Override
 	@Transactional
-	public Long join(String loginId, String password, RoleStatus role) {
+	public Long join(String loginId, String password, RoleStatus role, String memberName) {
 
 		String encodePw = passwordEncoder.encode(password);
 		Members member = Members.builder()
 			.loginId(loginId)
 			.password(encodePw)
-			.role(role)
+			.role(RoleStatus.EMPTY)
+			.memberName(memberName)
 			.build();
 		validateDuplicateMember(member);
 		membersRepository.save(member);
-
 		return member.getId();
 	}
 
@@ -61,33 +65,13 @@ public class MembersServiceImpl implements MembersService {
 	}
 
 	@Override
-	public PageResultDTO<VoiceUserResponse, Members> getUserInfoList(PageRequestDTO requestDTO) {
+	public PageResultDTO<MembersResponse, Members> getUserInfoList(PageRequestDTO requestDTO) {
 		Pageable pageable = requestDTO.getPageable();
 		Page<Members> result = membersRepository.getUserPageList(pageable);
-		Function<Members, VoiceUserResponse> fn = (VoiceUserResponse::from);
+		Function<Members, MembersResponse> fn = (MembersResponse::from);
 		return new PageResultDTO<>(result, fn);
 	}
 
-	@Override
-	@Transactional
-	public void addUser(VoiceUserAddRequest request) {
-		Long exceptRoleUploadVoiceIdCount = membersRepository.getCountAndExceptRoleUploadVoiceId();
-		String loginId = "xpvoice" + ++exceptRoleUploadVoiceIdCount;
-		String password;
-		if (request.roleStatus().equals(RoleStatus.ADMIN)) {
-			String capitalizedLoginId = Character.toUpperCase(loginId.charAt(0)) + loginId.substring(1);
-			password = passwordEncoder.encode(capitalizedLoginId + "!@");
-		} else {
-			password = passwordEncoder.encode("a123456789");
-		}
-		Members member = Members.builder()
-			.loginId(loginId)
-			.password(password)
-			.role(request.roleStatus())
-			.build();
-		membersRepository.save(member);
-
-	}
 
 	@Override
 	@Transactional
@@ -161,37 +145,26 @@ public class MembersServiceImpl implements MembersService {
 
 	@Override
 	@Transactional
-	public void changeRoleInstallCompany(Long id, VoiceUserUpdateRequest request) {
+	public void changeRoleAndName(Long id, MemberUpdateRequest request) {
 		membersRepository.findById(id).ifPresent(members -> {
 			if (members.getChangePasswordAt() == null) {
 				this.rolePasswordInit(members);
 			}
 			members.changeRole(request.roleStatus());
+			members.changeName(request.memberName());
 		});
 	}
 
-	@Override
-	public String getInstallCompanyName(String loginID) {
-		return null;
-	}
+
 
 	@Override
-	public String getLastUserId() {
-		return null;
-	}
-
-	@Override
-	public VoiceDetailUserResponse getUserDetailInfo(Long id) {
+	public MembersDetailResponse getUserDetailInfo(Long id) {
 		return membersRepository.findById(id)
-			.map(VoiceDetailUserResponse::from)
+			.map(MembersDetailResponse::from)
 			.orElse(null);
 
 	}
 
-	@Override
-	public List<String> getInstallCompanyNameList() {
-		return null;
-	}
 
 	@Override
 	public Long getVoiceUserId(String loginId) {

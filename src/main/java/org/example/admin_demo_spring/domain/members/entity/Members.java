@@ -95,6 +95,10 @@ public class Members extends BaseEntity {
 		this.role = role;
 	}
 
+	public void changeName(String name) {
+		this.memberName = name;
+	}
+
 
 	public boolean isPasswordExpired() {
 		if (changePasswordAt == null) {
