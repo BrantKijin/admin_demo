@@ -51,10 +51,6 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'
 
-    /*JWT 의존성*/
-    compileOnly group: 'io.jsonwebtoken', name: 'jjwt-api', version: '0.12.3'
-    runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-impl', version: '0.12.3'
-    runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-jackson', version: '0.12.3'
 
     // shedlock lib
     implementation 'net.javacrumbs.shedlock:shedlock-core:5.9.1'
