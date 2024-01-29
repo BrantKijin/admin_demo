@@ -5,7 +5,7 @@ import java.util.Date;
 import java.util.TimeZone;
 
 import org.example.admin_demo_spring.common.dto.response.ApiResponse;
-import org.example.admin_demo_spring.domain.members.dto.request.VoiceUserInitPasswordRequest;
+import org.example.admin_demo_spring.domain.members.dto.request.MemberInitPasswordRequest;
 import org.example.admin_demo_spring.domain.members.service.MembersService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -53,7 +53,7 @@ public class SecurityLoginController {
 	@ResponseBody
 	@PostMapping("/login-info/password-init/{id}")
 	public ApiResponse userPasswordInitChange(@PathVariable("id") Long id
-		, @Validated @RequestBody VoiceUserInitPasswordRequest request
+		, @Validated @RequestBody MemberInitPasswordRequest request
 	) {
 
 		membersService.passwordInitChange(id, request);

@@ -5,8 +5,7 @@ import org.example.admin_demo_spring.common.dto.page.PageResultDTO;
 import org.example.admin_demo_spring.common.dto.response.ApiResponse;
 import org.example.admin_demo_spring.common.enums.RoleStatus;
 import org.example.admin_demo_spring.common.service.CommonService;
-import org.example.admin_demo_spring.domain.members.dto.request.VoiceUserAddRequest;
-import org.example.admin_demo_spring.domain.members.dto.request.VoiceUserUpdatePasswordRequest;
+import org.example.admin_demo_spring.domain.members.dto.request.MemberUpdatePasswordRequest;
 import org.example.admin_demo_spring.domain.members.dto.request.MemberUpdateRequest;
 import org.example.admin_demo_spring.domain.members.dto.response.MembersResponse;
 import org.example.admin_demo_spring.domain.members.entity.Members;
@@ -83,7 +82,7 @@ public class AdminController {
 	@ResponseBody
 	@PostMapping("/login-info/password/{id}")
 	public ApiResponse userPasswordChange(@PathVariable("id") Long id,
-		@Validated @RequestBody VoiceUserUpdatePasswordRequest request
+		@Validated @RequestBody MemberUpdatePasswordRequest request
 		, Authentication authentication
 	) {
 		commonService.checkAdminPermission(authentication);

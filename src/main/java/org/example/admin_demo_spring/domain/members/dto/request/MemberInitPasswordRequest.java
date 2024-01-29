@@ -4,7 +4,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 
-public record VoiceUserInitPasswordRequest(
+public record MemberInitPasswordRequest(
 
 	@Schema(description = "비번", example = "123123@#$!2")
 	@Pattern(regexp = "^(?=.*[a-z])(?=.*\\d)(?=.*[@#$!%*?&])[A-Za-z\\d@#$!%*?&]{6,12}$", message = "변경할 비밀번호 형식이 올바르지 않습니다")

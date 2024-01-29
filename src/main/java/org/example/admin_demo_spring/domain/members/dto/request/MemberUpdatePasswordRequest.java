@@ -3,7 +3,7 @@ package org.example.admin_demo_spring.domain.members.dto.request;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Pattern;
 
-public record VoiceUserUpdatePasswordRequest(
+public record MemberUpdatePasswordRequest(
 
 	@Schema(description = "비번", example = "123123@#$!2")
 	String password,
