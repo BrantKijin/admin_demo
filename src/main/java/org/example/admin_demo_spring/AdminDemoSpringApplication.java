@@ -9,8 +9,8 @@ import net.javacrumbs.shedlock.spring.annotation.EnableSchedulerLock;
 
 @EnableJpaAuditing
 @SpringBootApplication
-@EnableScheduling
-@EnableSchedulerLock(defaultLockAtMostFor = "PT60S")
+// @EnableScheduling
+// @EnableSchedulerLock(defaultLockAtMostFor = "PT60S")
 public class AdminDemoSpringApplication {
 
 	public static void main(String[] args) {
