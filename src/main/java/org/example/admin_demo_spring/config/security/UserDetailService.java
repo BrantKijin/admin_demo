@@ -21,7 +21,7 @@ public class UserDetailService implements UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(String insertedUserId) throws UsernameNotFoundException {
 		Optional<Members> findOne = membersService.getByLoginId(insertedUserId);
-		System.out.println();
+
 		Members members = findOne.orElseThrow(() -> new UsernameNotFoundException("없는 회원입니다."));
 
 		return User.builder()
