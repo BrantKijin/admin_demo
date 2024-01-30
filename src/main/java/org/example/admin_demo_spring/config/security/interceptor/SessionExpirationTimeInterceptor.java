@@ -8,8 +8,7 @@ import jakarta.servlet.http.HttpSession;
 
 public class SessionExpirationTimeInterceptor implements HandlerInterceptor {
 	@Override
-	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws
-		Exception {
+	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
 		HttpSession session = request.getSession(false);
 		if (session != null) {
 			long lastAccessedTime = session.getLastAccessedTime();
